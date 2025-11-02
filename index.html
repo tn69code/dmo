@@ -1,928 +1,357 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-  <title>DMO TH</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <title>DMO - Modern Mockup Tool</title>
   <link rel="icon" href="./favicon.ico" type="image/x-icon">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
-<link rel="stylesheet" href="https://mm-dmo.duckdns.org/style.css">
-<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<nav class="nav">
- <a href="../install_apk" class="nav__link">
-    <i class="material-icons nav__icon">install_mobile</i>
-   
-    <span class="nav__text">Mobile App</span>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
-  </a>
-  <a href="#" class="nav__link nav__link--active">
-    <i class="material-icons nav__icon">home</i>
-    <span class="nav__t">Home</span>
-  </a>
-  
- 
-
-  <a href="#" class="nav__link">
-    <i class="material-icons nav__icon">chat</i>
-    <span class="nav__text" onclick="danger()">Contact admin</span>
-  </a>
-  
-
-</nav>
-<!-- partial -->
-<div class="div__tak">
-
-<center>
-	<label for="imageLoader">
-	    <iconify-icon icon="mdi:cloud-upload-outline"></iconify-icon alt="Add">
-	     <span id="span">Upload your image here</span>
-	<input type="file" id="imageLoader" name="imageLoader" accept="image/*"></label>
-	
-	<canvas id="imageCanvas"></canvas>
-	<center><div id="img_div"></div></center>
-	<script type="text/javascript">
-		/* Know how you can contribute to the code: Simply go to the Github project's issue. */
-		var imageLoader = document.getElementById("imageLoader");
-      	imageLoader.addEventListener("change", handleImage, false);
-      	var canvas = document.getElementById("imageCanvas");
-      	var ctx = canvas.getContext("2d");
-      	function handleImage(e) {
-        var reader = new FileReader();
-        reader.onload = function(event) {
-        	var img = new Image();
-          	img.crossOrigin = "*";
-          	img.onload = function() {
-            canvas.width = 1840;
-            canvas.height = 3600;
-            ctx.drawImage(img, 200, 200, 1440, 3200);
-			
-            var wm = new Image();
-            wm.crossOrigin = "*";
-            wm.onload = function() {
-              ctx.drawImage(this, 0, 0, 1840, 3600);
-              var base64 = canvas.toDataURL("image/png");
-              
-              var fileToSave = new Image();
-              fileToSave.onload = function() {
-                document.getElementById("img_div").appendChild(this);
-              };
-              fileToSave.src = base64;
-            };
-            
-            wm.src =
-              "/bezelless_wgray.png";
-          };
-        
-          var_dl('project');
-         
-          img.src = event.target.result;
-        };
-        reader.readAsDataURL(e.target.files[0]);
-	
-document.getElementById('download').addEventListener('click', function(e) {
-    // Convert our canvas to a data URL
-    let canvasUrl = canvas.toDataURL();
-    // Create an anchor, and set the href value to our data URL
-    const createEl = document.createElement('a');
-    createEl.href = canvasUrl;
-
-    // This is the name of our downloaded file
-    createEl.download = "download.png";
-
-    // Click the download button, causing a download, and then remove it
-    createEl.click();
-    createEl.remove();
-});
-
-
-        
-	}
-	</script>
-
-	
-	
-	<div id="project" style="display:none"><p class="ex1">
-	    <button class="btn btn-outline-primary"  for="img_div" id="download"><i class="fa fa-download"></i> Download image</button>
-
-
-	<button1 onClick="resetBtn()" class="button btn-closs fa fa-times" id="resetBtn"></button1>
-
-</div>
 <style>
-p.ex1 {
-  margin-top: 14px;
+/* ==================================== */
+/* 1. Light/Dark Mode Variables & Base */
+/* ==================================== */
+
+:root[data-theme="light"] {
+    --color-primary: #0D6EFD;
+    --color-primary-light: #4c8fee;
+    --color-text: #212529;
+    --color-bg-light: #ffffff;
+    --color-bg-main: #f8f9fa; /* Off-White Background */
+    --color-card-bg: #ffffff;
+    --color-border: #dee2e6;
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.btn-close {
-  background-color: transparent;
-  &:hover, &:focus {
-    background-color: var(--c-action-primary-accent);
-  }
-}
-​
-* {
-  margin: 0;
-  podding: 0;
-  box-sizing: border-box;
+:root[data-theme="dark"] {
+    --color-primary: #58b368;
+    --color-primary-light: #6dc77f;
+    --color-text: #e9ecef;
+    --color-bg-light: #2c313a;
+    --color-bg-main: #212529; /* Deep Gray/Black Background */
+    --color-card-bg: #2c313a;
+    --color-border: #444c5c;
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-input {
-  display: none;
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-bg-main);
+    color: var(--color-text);
+    transition: background-color 0.4s, color 0.4s;
 }
+
+.div__tak {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 10px;
+}
+
+/* ==================================== */
+/* 2. Header & Action Bar */
+/* ==================================== */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    background-color: var(--color-card-bg);
+    box-shadow: var(--shadow-soft);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.logo {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+.action-icons {
+    display: flex;
+    gap: 15px;
+}
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text);
+    font-size: 1.5rem;
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+.icon-btn:hover {
+    color: var(--color-primary);
+    background-color: var(--color-bg-main);
+}
+/* Contact/User icon style */
+#contact-admin-btn iconify-icon {
+    font-size: 1.3rem;
+    /* User icon ကို Facebook logo ပုံစံမျိုး ပြောင်းလဲလိုက်ခြင်း */
+    icon: 'mdi:facebook'; 
+    border: 2px solid var(--color-text);
+    border-radius: 50%;
+    padding: 3px;
+    color: #4267B2; /* Facebook Blue */
+    background-color: var(--color-bg-light); 
+}
+#contact-admin-btn:hover iconify-icon {
+    border-color: #4267B2; 
+    color: var(--color-primary);
+}
+
+
+/* ==================================== */
+/* 3. Main Content Card Styles */
+/* ==================================== */
+.main-card {
+    background-color: var(--color-card-bg);
+    padding: 30px 20px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    text-align: center;
+}
+.main-card h3 {
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+/* ==================================== */
+/* 4. Upload Area */
+/* ==================================== */
+input { display: none; }
 
 label {
-  width: 280px;
-  height: 125px;
-  padding: 15px;
-
-  border: 2px dotted #0D6EFD;
-  border-radius: 5px;
-  color: #0D6EFD;
+  width: 100%;
+  height: 150px;
+  margin-top: 15px;
+  border: 3px dashed var(--color-primary);
+  border-radius: 15px;
+  color: var(--color-primary);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
-
   cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 label:hover {
-  background-color: #ede7f6;
+  background-color: rgba(var(--color-primary-light), 0.1);
 }
 
-iconify-icon {
-  font-size: 28px;
+iconify-icon { font-size: 36px; }
+#span { font-weight: 700; }
+
+/* ==================================== */
+/* 5. Results & Buttons */
+/* ==================================== */
+#img_div {
+    margin-top: 20px;
+    background-color: var(--color-bg-main);
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid var(--color-border);
+}
+#img_div img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 6px;
+    box-shadow: var(--shadow-soft);
+}
+#imageCanvas { display: none; }
+
+.action-bar-bottom {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
 }
 
+/* Primary Button - Download */
+.btn-primary {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-bg-light) !important;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 10px 25px;
+  transition: all 0.2s;
+}
+.btn-primary:hover {
+    background-color: var(--color-primary-light) !important;
+    transform: translateY(-1px);
+}
 
-button {
-  appearance: none;
-  padding: 8px;
-
-  background-color: #58b368;
+/* Secondary Button - Reset */
+.btn-closs {
+  background-color: #dc3545 !important;
   border: none;
-  border-radius: 5px;
-
-  color: #ede7f6;
-  font-family: sans-serif;
-  font-size: 16px;
-
-  cursor: pointer;
-}
-
-button:hover {
-  color: #fff;
-}
-button1 {
-  appearance: none;
-  padding: 8px;
-
-  background-color: #FF4040;
-  border: none;
-  border-radius: 5px;
-
-  color: #ede7f6;
-  font-family: sans-serif;
-  font-size: 16px;
-
-  cursor: pointer;
+  color: white !important;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 1.1rem;
 }
 
 </style>
+</head>
+<body>
 
-	<script type="text/javascript">
-  function var_dl(id) {
-    document.getElementById(id).style.display='block';
+<div class="header">
+    <a href="#" class="logo">DMO</a>
+    <div class="action-icons">
+        <button class="icon-btn" onclick="openFacebook()" id="contact-admin-btn" title="Contact via Facebook">
+            <iconify-icon icon="mdi:facebook"></iconify-icon>
+        </button>
+        <button class="icon-btn" onclick="toggleTheme()" id="theme-toggle" title="Toggle Light/Dark Mode">
+            <iconify-icon icon="ic:round-light-mode"></iconify-icon>
+        </button>
+    </div>
+</div>
+
+<div class="div__tak card-container">
+
+<div class="main-card upload-section">
+    <h3>Mockup Generator</h3>
+    <p>Select a screenshot to perfectly fit the device frame.</p>
+    
+    <label for="imageLoader">
+        <iconify-icon icon="mdi:cloud-upload-outline"></iconify-icon>
+        <span id="span">Click or Drag Image Here (PNG or JPG)</span>
+        <input type="file" id="imageLoader" name="imageLoader" accept="image/*">
+    </label>
+</div>
+
+
+<div class="main-card preview-section" id="preview-card" style="display:none;">
+    <h3>Generated Mockup</h3>
+    <canvas id="imageCanvas"></canvas>
+    
+    <div id="img_div"></div>
+    
+    <div id="project" class="action-bar-bottom"><p class="ex1">
+        <button class="btn btn-primary" id="download"><i class="fa fa-download"></i> Download Image</button>
+        <button class="btn-closs fa fa-times" id="resetBtn" onClick="resetBtn()"></button>
+    </p></div>
+</div>
+
+</div> <script type="text/javascript">
+    
+    // ==================
+    // 1. Theme Toggle Logic
+    // ==================
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+    }
+    
+    function updateThemeIcon(theme) {
+        const icon = document.getElementById('theme-toggle').querySelector('iconify-icon');
+        if (theme === 'dark') {
+            icon.setAttribute('icon', 'ic:round-dark-mode');
+        } else {
+            icon.setAttribute('icon', 'ic:round-light-mode');
+        }
+    }
+    
+    // Load saved theme on startup
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+
+    // ==================
+    // 2. Facebook Link Function
+    // ==================
+    function openFacebook() {
+        const facebookUrl = "https://www.facebook.com/share/1Biv8agdMC/";
+        // Open the link in a new tab (_blank)
+        window.open(facebookUrl, '_blank');
+    }
+
+    // ==================
+    // 3. Mockup Logic (Unchanged)
+    // ==================
+    var imageLoader = document.getElementById("imageLoader");
+    imageLoader.addEventListener("change", handleImage, false);
+    var canvas = document.getElementById("imageCanvas");
+    var ctx = canvas.getContext("2d");
+    
+    function handleImage(e) {
+        document.getElementById('preview-card').style.display = 'block'; 
+        document.getElementById('img_div').innerHTML = ''; 
+        
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            var img = new Image();
+            img.crossOrigin = "*";
+            img.onload = function() {
+                canvas.width = 1840;
+                canvas.height = 3600;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // 1. Draw uploaded image
+                ctx.drawImage(img, 200, 200, 1440, 3200);
+        
+                var wm = new Image();
+                wm.crossOrigin = "*";
+                wm.onload = function() {
+                    // 2. Draw device frame on top
+                    ctx.drawImage(this, 0, 0, 1840, 3600);
+                    
+                    var base64 = canvas.toDataURL("image/png");
+          
+                    var fileToSave = new Image();
+                    fileToSave.onload = function() {
+                        document.getElementById("img_div").appendChild(this);
+                    };
+                    fileToSave.src = base64;
+                };
+                
+                // ဖုန်းဘောင် လိပ်စာ (Fixed)
+                wm.src = "https://tn69code.github.io/dmo/bezelless_wgray.png";
+            };
+        
+            var_dl('project');
+            img.src = event.target.result;
+        };
+        reader.readAsDataURL(e.target.files[0]);
+
+        document.getElementById('download').onclick = function() {
+            let canvasUrl = canvas.toDataURL("image/png");
+            const createEl = document.createElement('a');
+            createEl.href = canvasUrl;
+            createEl.download = "mockup-dmo.png";
+            createEl.click();
+            createEl.remove();
+        };
+    }
+
+    // ==================
+    // 4. Utility Functions
+    // ==================
+    function var_dl(id) {
+        document.getElementById(id).style.display='flex';
     }
     function resetBtn() {
         history.go(0);
-  }
-  
+    }
+
 </script>
-    
-
-</div>
-
-  <style>
-      body {
-    margin: 0 0 55px 0;
-}
-     .div__tak {
-    margin: 10px;
-}
-
-.nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 65px;
-    border-radius: 0px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    background-color: #ffffff;
-    display: flex;
-    overflow-x: auto;
-}
-
-.nav__link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-    min-width: 55px;
-    overflow: hidden;
-    white-space: nowrap;
-    font-family: sans-serif;
-    font-size: 13px;
-    color: #444444;
-    text-decoration: none;
-    -webkit-tap-highlight-color: transparent;
-    transition: background-color 0.1s ease-in-out;
-}
-
-.nav__link:hover {
-    background-color: #00000000;
-    border-radius: 15px;
-    color: #58b368;
-}
-
-.nav__link--active {
-    color: #0D6EFD;
-}
-
-.nav__icon {
-    font-size: 18px;
-}
-
-.nav__t {
-   border-radius: 5px;
-   }
-  </style>
-  
-  
-
-
-<!-- 
- how does it work ?
-     Add the CSS and JavaScript codes
-      to your document then 
-      call ava function like this =>
-      ava({
-        icon: string 'success' | 'danger' | 'info' | 'none' (defult is success),
-        text: string (alert text),
-        toast: bol true | false (defult is false) ,
-        progressBar: bol true | false (defult is true),
-        timer: int (defult is 4000),
-        btnText: string (Alert btn text Not Work For toast alerts),
-        direction: string 'rtl' | 'ltr' (defult is rtl only for toast),
-        position: string 'top-right' | 'top-left' | 'bottom-left' | 'bottom-right' (defult is top-right Only work for Toast alerts),
-      })
-
-      good luck =)
- -->
-
-       
-    <style>
-        * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  outline: 0;
-  direction: ltr;
-}
-
-body {
-  background-color: #ffffff;
-  color: black;
-}
-
-.ava-modal {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ava-modal > * {
-  box-sizing: border-box;
-}
-
-.ava-alert {
-  background-color: white;
-  width: 80%;
-  text-align: right;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri;
-  font-weight: 900;
-  animation: 25s 1 ava_alert_animation;
-  -webkit-animation: 0.5s 1 ava_alert_animation;
-}
-
-@media (min-width: 650px) {
-  .ava-alert {
-    width: 300px;
-  }
-}
-
-@keyframes ava_alert_animation {
-  from {
-    transform: scale(0.5);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-
-.ava-alert .ava-progress-bar {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.04);
-  animation-name: progressBarAnimation;
-  -webkit-animation-name: progressBarAnimation;
-}
-
-.ava-alert .ava-text-con {
-  position: relative;
-}
-
-@keyframes progressBarAnimation {
-  from {
-    width: 0%;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-.ava-alert__icon {
-  padding: 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  box-shadow: inset 0px -5px 7px rgba(0, 0, 0, 0.3);
-}
-
-.ava-alert__text {
-  padding: 15px;
-  line-height: 1.5em;
-  color: #8a8a8a;
-  font-size: 13px;
-}
-
-.ava-alert__btn {
-  width: 70px;
-  padding: 7px 0px;
-  display: block;
-  margin: auto;
-  margin-bottom: 13px;
-  border-radius: 0;
-  border: 0;
-  background-color: #dfdfdf;
-  color: #b1b1b1;
-  cursor: pointer;
-  position: relative;
-}
-
-.ava-toast {
-  position: fixed;
-  box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.1);
-  width: 250px;
-  display: flex;
-  flex-direction: row;
-  background-color: white;
-}
-
-.ava-toast svg {
-  width: 30px;
-  height: 30px;
-}
-
-.ava-toast .ava-alert__icon {
-  padding: 0 10px;
-  box-shadow: none;
-}
-
-.ava-toast .ava-text-con {
-  width: 100%;
-}
-
-.ava-toast .ava-alert__btn {
-  margin: 0;
-}
-
-.ava-toast .ava-alert__text {
-  padding: 5px;
-  width: 100%;
-}
-
-.svg-box {
-  display: inline-block;
-  position: relative;
-  width: 150px;
-}
-
-.ava-text-con {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.green-stroke {
-  stroke: #ffffff;
-}
-
-.red-stroke {
-  stroke: #ffffff;
-}
-
-.yellow-stroke {
-  stroke: #ffffff;
-}
-
-.circular circle.path {
-  stroke-dasharray: 330;
-  stroke-dashoffset: 0;
-  stroke-linecap: round;
-  opacity: 0.4;
-  animation: 0.7s draw-circle ease-out;
-}
-
-/*------- Checkmark ---------*/
-.checkmark {
-  stroke-width: 6.25;
-  stroke-linecap: round;
-  position: absolute;
-  top: 56px;
-  left: 49px;
-  width: 52px;
-  height: 40px;
-}
-
-.checkmark path {
-  animation: 1s draw-check ease-out;
-}
-
-@keyframes draw-circle {
-  0% {
-    stroke-dasharray: 0, 330;
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
-  80% {
-    stroke-dasharray: 330, 330;
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.4;
-  }
-}
-
-@keyframes draw-check {
-  0% {
-    stroke-dasharray: 49, 80;
-    stroke-dashoffset: 48;
-    opacity: 0;
-  }
-  50% {
-    stroke-dasharray: 49, 80;
-    stroke-dashoffset: 48;
-    opacity: 1;
-  }
-  100% {
-    stroke-dasharray: 130, 80;
-    stroke-dashoffset: 48;
-  }
-}
-
-/*---------- Cross ----------*/
-.cross {
-  stroke-width: 6.25;
-  stroke-linecap: round;
-  position: absolute;
-  top: 54px;
-  left: 54px;
-  width: 40px;
-  height: 40px;
-}
-
-.cross .first-line {
-  animation: 0.7s draw-first-line ease-out;
-}
-
-.cross .second-line {
-  animation: 0.7s draw-second-line ease-out;
-}
-
-@keyframes draw-first-line {
-  0% {
-    stroke-dasharray: 0, 56;
-    stroke-dashoffset: 0;
-  }
-  50% {
-    stroke-dasharray: 0, 56;
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dasharray: 56, 330;
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes draw-second-line {
-  0% {
-    stroke-dasharray: 0, 55;
-    stroke-dashoffset: 1;
-  }
-  50% {
-    stroke-dasharray: 0, 55;
-    stroke-dashoffset: 1;
-  }
-  100% {
-    stroke-dasharray: 55, 0;
-    stroke-dashoffset: 70;
-  }
-}
-
-.alert-sign {
-  stroke-width: 6.25;
-  stroke-linecap: round;
-  position: absolute;
-  top: 40px;
-  left: 68px;
-  width: 15px;
-  height: 70px;
-  animation: 0.5s alert-sign-bounce cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.alert-sign .dot {
-  stroke: none;
-  fill: #ffffff;
-}
-
-@keyframes alert-sign-bounce {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(0);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-    </style>
-    
-    <script>
-		const ava = ({ icon = 'success', toast = false, progressBar = true, text = null, timer = 4000, btnText = 'Okay', direction = 'rtl', position = 'top-right' }) => {
-            const modal = document.createElement('section');
-            modal.setAttribute('class', 'ava-modal');
-            document.body.appendChild(modal);
-            const alert = document.createElement('div');
-            alert.setAttribute('class', 'ava-alert');
-            modal.appendChild(alert);
-            var avaIcon;
-            if (icon == 'success' && toast == false) {
-                avaIcon = `
-                <div class="ava-alert__icon" style="background: #1eb35bd8;">
-                <div class="svg-box">
-                    <svg class="circular green-stroke">
-                    <circle class="path" cx="75" cy="75" r="50" fill="none" stroke-width="5" stroke-miterlimit="10"/>
-                </svg>
-                <svg class="checkmark green-stroke">
-                    <g transform="matrix(0.79961,8.65821e-32,8.39584e-32,0.79961,-489.57,-205.679)">
-                        <path class="checkmark__check" fill="none" d="M616.306,283.025L634.087,300.805L673.361,261.53"/>
-                    </g>
-                </svg>
-                </div>
-            </div>
-              `;
-
-            } else if (icon == 'info' && toast == false) {
-                avaIcon = `
-                <div class="ava-alert__icon" style="background: #434D8C;">
-                <div class="svg-box">
-                    <svg class="circular yellow-stroke">
-                        <circle class="path" cx="75" cy="75" r="50" fill="none" stroke-width="5"
-                            stroke-miterlimit="10" />
-                    </svg>
-                    <svg class="alert-sign yellow-stroke">
-                        <g transform="matrix(1,0,0,1,-615.516,-257.346)">
-                            <g transform="matrix(0.56541,-0.56541,0.56541,0.56541,93.7153,495.69)">
-                                <path class="line" d="M634.087,300.805L673.361,261.53" fill="none" />
-                            </g>
-                            <g transform="matrix(2.27612,-2.46519e-32,0,2.27612,-792.339,-404.147)">
-                                <circle class="dot" cx="621.52" cy="316.126" r="1.318" />
-                            </g>
-                        </g>
-                    </svg>
-                </div>
-            </div>
-
-              `;
-
-            } else if (icon == 'danger' && toast == false) {
-                avaIcon = `
-                <div class="ava-alert__icon" style="background: #e84d6ae1;">
-                <div class="svg-box">
-                    <svg class="circular red-stroke">
-                    <circle class="path" cx="75" cy="75" r="50" fill="none" stroke-width="5" stroke-miterlimit="10"/>
-                </svg>
-                <svg class="cross red-stroke">
-                    <g transform="matrix(0.79961,8.65821e-32,8.39584e-32,0.79961,-502.652,-204.518)">
-                        <path class="first-line" d="M634.087,300.805L673.361,261.53" fill="none"/>
-                    </g>
-                    <g transform="matrix(-1.28587e-16,-0.79961,0.79961,-1.28587e-16,-204.752,543.031)">
-                        <path class="second-line" d="M634.087,300.805L673.361,261.53"/>
-                    </g>
-                </svg>
-                </div>
-            </div>
-              `;
-
-            } else if (icon == 'info' && toast == true) {
-                avaIcon = `
-                    <div class="ava-alert__icon" style="background: #434D8C;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="8" stroke-dashoffset="8" d="M12 7V13"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="8;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>
-            </div>
-                    `;
-                btnText = '';
-            } else if (icon == 'success' && toast == true) {
-                avaIcon = `
-                    <div class="ava-alert__icon" style="background: #438C5E;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="14" stroke-dashoffset="14" d="M8 12L11 15L16 10"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="14;0"/></path></g></svg>
-            </div>
-                    `;
-                btnText = '';
-            } else if (icon == 'danger' && toast == true) {
-                avaIcon = `
-                    <div class="ava-alert__icon" style="background: #8C4343;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="8" stroke-dashoffset="8" d="M12 12L16 16M12 12L8 8M12 12L8 16M12 12L16 8"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="8;0"/></path></g></svg>
-            </div>
-                    `;
-                btnText = '';
-            } else if (toast == true && icon == 'none') {
-                avaIcon = '';
-                btnText = '';
-            } else if (toast == false && icon == 'none') {
-                avaIcon = '';
-            }
-            document.querySelector('.ava-alert').innerHTML = `
-          ${avaIcon}
-<div class='ava-text-con'>
-            <p class="ava-alert__text">
-            ${text}
-            </p>
-            <button class="ava-alert__btn">${btnText}</button>
-        </div>
-            `;
-            var new_timer_format = '';
-            switch (timer) {
-                case 1000:
-                    new_timer_format = '1s';
-                    break;
-                case 2000:
-                    new_timer_format = '2s';
-                    break;
-                case 3000:
-                    new_timer_format = '3s';
-                    break;
-                case 4000:
-                    new_timer_format = '4s';
-                    break;
-                case 5000:
-                    new_timer_format = '5s';
-                    break;
-                case 6000:
-                    new_timer_format = '6s';
-                    break;
-                case 7000:
-                    new_timer_format = '7s';
-                    break;
-                case 8000:
-                    new_timer_format = '8s';
-                    break;
-                case 9000:
-                    new_timer_format = '9s';
-                    break;
-                case 10000:
-                    new_timer_format = '10s';
-                    break;
-                default:
-                    new_timer_format = '4s';
-            }
-            if (timer > 10000) {
-                timer = 4000;
-            }
-            if (toast == true) {
-                modal.style = 'background-color: rgba(0, 0, 0, 0);';
-                alert.classList.add('ava-toast');
-                if (progressBar == false) {
-                    document.querySelector('.ava-alert__btn').remove();
-                } else {
-                    document.querySelector('.ava-alert__btn').style = 'width: 100%; padding: 2px;'
-                }
-                switch (position) {
-                    case 'top-right':
-                        alert.style = `
-                    top: 10px;
-                    right: 10px;
-                    `;
-                        break;
-                    case 'top-left':
-                        alert.style = `
-                    top: 10px;
-                    left: 10px;
-                    `;
-                        break;
-                    case 'bottom-left':
-                        alert.style = `
-                        bottom: 10px;
-                        left: 10px;
-                    `;
-                        break;
-                    case 'bottom-right':
-                        alert.style = `
-                        bottom: 10px;
-                    right: 10px;
-                    `;
-                        break;
-                }
-            }
-            if (progressBar == true) {
-                const progressBar_el = document.createElement('div');
-                progressBar_el.setAttribute('class', 'ava-progress-bar');
-                document.querySelector('.ava-alert__btn').appendChild(progressBar_el);
-                document.querySelector('.ava-progress-bar').style = `
-                animation-duration: ${new_timer_format};
-        -webkit-animation-duration: ${new_timer_format};
-                `;
-            }
-
-            if (progressBar == true) {
-                setTimeout(() => {
-                    modal.remove();
-                    alert.remove();
-                }, timer);
-            } else if (progressBar == false && toast == true) {
-                setTimeout(() => {
-                    modal.remove();
-                    alert.remove();
-                }, timer);
-            }
-            if (direction == 'rtl' && toast == true) {
-                document.querySelector('.ava-modal > *').style.direction = 'rtl';
-                document.querySelector('.ava-modal > *').style.textAlign = 'right';
-                document.querySelector('.ava-alert__btn').style.direction = 'rtl';
-            } else if (direction == 'ltr' && toast == true) {
-                document.querySelector('.ava-modal > *').style.direction = 'ltr';
-                document.querySelector('.ava-modal > *').style.textAlign = 'left';
-                document.querySelector('.ava-alert__btn').style.direction = 'ltr';
-            } else {
-                document.querySelector('.ava-modal > *').style.textAlign = 'center';
-            }
-            document.querySelector('.ava-alert__btn').addEventListener('click', function () {
-                alert.remove();
-                modal.remove();
-            })
-            window.addEventListener('click', function (e) {
-                if (e.target == document.querySelector('.ava-modal')) {
-                    modal.remove();
-                    alert.remove();
-                }
-
-            })
-        }
-
-
-
-
-
-
-
-
-
-        function info() {
-            ava({
-                icon: 'info',
-                text: 'This is a Info Alert',
-                btnText: 'Okay',
-                progressBar: true,
-                toast: false,
-            });
-        }
-        function success() {
-            ava({
-                icon: 'success',
-                text: 'This is a Success Alert',
-                btnText: 'Okay',
-                progressBar: true,
-                toast: false,
-            });
-        }
-        function danger() {
-            ava({
-                icon: 'danger',
-                text: 'not available yet',
-                btnText: 'Okay',
-                progressBar: true,
-                toast: false,
-            });
-        }
-
-        function white() {
-            ava({
-                icon: 'none',
-                text: 'This is a Simple Alert',
-                btnText: 'Okay',
-                progressBar: true,
-                toast: false,
-                timer: 8000
-            });
-        }
-
-
-        function Toast_info() {
-            ava({
-                icon: 'info',
-                text: 'This is a Toast info Alert',
-                btnText: '',
-                progressBar: true,
-                toast: true,
-                position: 'top-right',
-                direction: 'ltr',
-                timer: 4000
-            });
-        }
-
-
-        function Toast_success() {
-            ava({
-                icon: 'success',
-                text: 'This is a Toast success Alert',
-                btnText: '',
-                progressBar: true,
-                toast: true,
-                position: 'top-right',
-                direction: 'ltr',
-                timer: 4000
-            });
-        }
-
-
-        function Toast_danger() {
-            ava({
-                icon: 'danger',
-                text: 'This is a Toast danger Alert',
-                btnText: '',
-                progressBar: true,
-                toast: true,
-                position: 'top-right',
-                direction: 'ltr',
-                timer: 4000
-            });
-        }
-
-        function Toast_white() {
-            ava({
-                icon: 'none',
-                text: 'This is a Toast simple Alert',
-                btnText: '',
-                progressBar: true,
-                toast: true,
-                position: 'top-right',
-                direction: 'ltr',
-                timer: 4000
-            });
-        }
-	</script>
     
 </body>
 </html>
