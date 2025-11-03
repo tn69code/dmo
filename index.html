@@ -15,7 +15,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
 <style id="obfuscated-styles">
-/* Reset Button ကို အနီရောင် ပုံသေထားသော CSS */
+/* CSS Styles များ */
 :root[data-theme="light"]{--color-primary:#0D6EFD;--color-primary-light:#4c8fee;--color-text:#212529;--color-bg-light:#ffffff;--color-bg-main:#f8f9fa;--color-card-bg:#ffffff;--color-border:#dee2e6;--shadow-soft:0 4px 12px rgba(0,0,0,0.1)}:root[data-theme="dark"]{--color-primary:#58b368;--color-primary-light:#6dc77f;--color-text:#e9ecef;--color-bg-light:#2c313a;--color-bg-main:#212529;--color-card-bg:#2c313a;--color-border:#444c5c;--shadow-soft:0 4px 12px rgba(0,0,0,0.4)}body{margin:0;font-family:'Inter',sans-serif;background-color:var(--color-bg-main);color:var(--color-text);transition:background-color 0.4s,color 0.4s}.div__tak{max-width:800px;margin:0 auto;padding:20px 10px}.header{display:flex;justify-content:space-between;align-items:center;padding:15px 25px;background-color:var(--color-card-bg);box-shadow:var(--shadow-soft);position:sticky;top:0;z-index:1000}.logo{font-size:1.6rem;font-weight:800;color:var(--color-primary);text-decoration:none;letter-spacing:-0.5px}.action-icons{display:flex;gap:15px}.icon-btn{background:none;border:none;cursor:pointer;color:var(--color-text);font-size:1.5rem;padding:5px;border-radius:50%;transition:all 0.2s}.icon-btn:hover{color:var(--color-primary);background-color:var(--color-bg-main)}#contact-admin-btn iconify-icon{font-size:1.3rem;icon:'mdi:facebook';border:2px solid var(--color-text);border-radius:50%;padding:3px;color:#4267B2;background-color:var(--color-bg-light)}#contact-admin-btn:hover iconify-icon{border-color:#4267B2;color:var(--color-primary)}.main-card{background-color:var(--color-card-bg);padding:30px 20px;border-radius:20px;box-shadow:var(--shadow-soft);text-align:center}.main-card h3{margin-bottom:5px;font-weight:600}input{display:none}label{width:100%;height:150px;margin-top:15px;border:3px dashed var(--color-primary);border-radius:15px;color:var(--color-primary);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;cursor:pointer;background-color:transparent;transition:background-color 0.3s,border-color 0.3s}label:hover{background-color:rgba(var(--color-primary-light),.1)}iconify-icon{font-size:36px}#span{font-weight:700}#img_div{margin-top:20px;background-color:var(--color-bg-main);border-radius:12px;padding:15px;border:1px solid var(--color-border)}#img_div img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:6px;box-shadow:var(--shadow-soft)}#imageCanvas{display:none}.action-bar-bottom{display:flex;justify-content:center;gap:15px;margin-top:20px}.btn-primary{background-color:var(--color-primary)!important;border-color:var(--color-primary)!important;color:var(--color-bg-light)!important;font-weight:bold;border-radius:8px;padding:10px 25px;transition:all 0.2s}.btn-primary:hover{background-color:var(--color-primary-light)!important;transform:translateY(-1px)}.btn-closs{background-color:#dc3545!important;border:none;color:white!important;border-radius:8px;padding:10px 15px;font-size:1.1rem}
 </style>
 </head>
@@ -71,29 +71,24 @@
     // ======================================
     var _0x2c68=['\x68\x74\x74\x70\x73\x3A\x2F\x2F\x77\x77\x77\x2E\x66\x61\x63\x65\x62\x6F\x6F\x6B\x2E\x63\x6F\x6D\x2F\x73\x68\x61\x72\x65\x2F\x31\x42\x69\x76\x38\x61\x67\x64\x4D\x43\x2F','\x2E\x2E\x2F\x62\x65\x7A\x65\x6C\x6C\x65\x73\x73\x5F\x77\x67\x72\x61\x79\x2E\x70\x6E\x67'];
     
+    // Base64 Encoded Firebase Config Object (သင့်ရဲ့ လျှို့ဝှက်ချက်များ)
+    // const firebaseConfig ကို ဝှက်ထားခြင်း
+    const _0xfirebaseConfig = 'eyJhcGlLZXkiOiJBSXphU3lDOU5wcjltRHVCMl84ZUl0dk0tU1lrSjgxM2VsOXdOQlUiLCJhdXRoRG9tYWluIjoiZG1vNjktYjc2N2EuZmlyZWJhc2VhcHAuY29tIiwiZGF0YWJhc2VVUkwiOiJodHRwczovL2RtbzY5LWI3NjdhLWRlZmF1bHQtcnRkYi5hc2lhLXNvdXRoZWFzdDEuZmlyZWJhc2VkYXRhYmFzZS5hcHAiLCJwcm9qZWN0SWQiOiJkbW82OS1iNzY3YSIsInN0b3JhZ2VCdWNrZXQiOiJkbW82OS1iNzY3YS5maXJlYmFzZXN0b3JhZ2UuYXBwIiwibWVzc2FnaW5nU2VuZGVySWQiOiIyMzg0NDYwNDMxNDciLCJhcHBJZCI6IjE6MjM4NDQ2MDQzMTQ3OndlYjoxOGVkYzAyZTQzM2RhZjE5MDUyNzAiLCJtZWFzdXJlbWVudElkIjoiRy1TSllTVkpMRVNRIn0=';
+
+
     // ======================================
     // 2. FIREBASE SETUP & GLOBAL COUNTER LOGIC
     // ======================================
 
-    // *** သင့်ရဲ့ တိကျသော Firebase Config Object ***
-    const firebaseConfig = {
-      apiKey: "AIzaSyC9Npr9mDuB2_8eItvM-SYkJ813el9wNBU",
-      authDomain: "dmo69-b767a.firebaseapp.com",
-      databaseURL: "https://dmo69-b767a-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "dmo69-b767a",
-      storageBucket: "dmo69-b767a.firebasestorage.app",
-      messagingSenderId: "238446043147",
-      appId: "1:238446043147:web:18edc02e433daf1905270e",
-      measurementId: "G-SJYSVJLESQ"
-    };
+    // Base64 မှ Firebase Config Object ကို ပြန်လည်ရယူခြင်း
+    const decodedConfigJson = atob(_0xfirebaseConfig);
+    const firebaseConfig = JSON.parse(decodedConfigJson);
     
     // Firebase စတင်ခြင်း
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
     // Realtime Database ထဲတွင် "mockup_count/total" လိပ်စာအောက်၌ စုစုပေါင်းအရေအတွက် သိမ်းမည်။
     const countRef = database.ref('mockup_count/total'); 
-
-    // Session Limit စစ်ဆေးခြင်း Logic များကို ဖြုတ်လိုက်ပြီ။
     
     // Global Count တန်ဖိုးကို Firebase မှ ဖတ်ယူပြီး Website တွင် ပြသခြင်း
     function listenForMockupCount() {
@@ -110,12 +105,9 @@
 
     // Global Count တန်ဖိုးကို Firebase တွင် တစ်ခု တိုးပေးခြင်း
     function incrementMockupCount() {
-        // Transaction ကို အသုံးပြု၍ Count ကို မှန်ကန်စွာ တိုးစေပါသည်။
         countRef.transaction((currentCount) => {
-            // null သို့မဟုတ် undefined ဖြစ်နေပါက 0 အနေနဲ့ စတင်ပြီး +1 တိုးပါ
             return (currentCount || 0) + 1; 
         });
-        // Local Storage Session Limit လည်း ဖြုတ်ထားပြီး ဖြစ်သည်။
     }
     
     // Load the global count when the page loads
@@ -163,7 +155,7 @@
     var ctx = canvas.getContext("2d");
     
     function handleImage(e) {
-        // *** Session Limit စစ်ဆေးခြင်းကို ဖယ်ရှားလိုက်ပြီ ***
+        // Session Limit စစ်ဆေးခြင်းကို ဖယ်ရှားလိုက်ပြီ
         
         document.getElementById('preview-card').style.display = 'block'; 
         document.getElementById('img_div').innerHTML = ''; 
@@ -227,8 +219,6 @@
         document.getElementById('preview-card').style.display = 'none'; 
         document.getElementById('img_div').innerHTML = ''; 
         document.getElementById("imageLoader").value = null; 
-        
-        // Reset လုပ်ရန် လိုအပ်သော Local Session Limit များလည်း ဖြုတ်ထားပြီး ဖြစ်သည်။
         
         alert("Mockup Tool ကို ပြန်လည်အသုံးပြုရန် အဆင်သင့်ဖြစ်ပါပြီ။");
     }
