@@ -15,8 +15,137 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
 <style id="obfuscated-styles">
-/* CSS Styles များ */
-:root[data-theme="light"]{--color-primary:#0D6EFD;--color-primary-light:#4c8fee;--color-text:#212529;--color-bg-light:#ffffff;--color-bg-main:#f8f9fa;--color-card-bg:#ffffff;--color-border:#dee2e6;--shadow-soft:0 4px 12px rgba(0,0,0,0.1)}:root[data-theme="dark"]{--color-primary:#58b368;--color-primary-light:#6dc77f;--color-text:#e9ecef;--color-bg-light:#2c313a;--color-bg-main:#212529;--color-card-bg:#2c313a;--color-border:#444c5c;--shadow-soft:0 4px 12px rgba(0,0,0,0.4)}body{margin:0;font-family:'Inter',sans-serif;background-color:var(--color-bg-main);color:var(--color-text);transition:background-color 0.4s,color 0.4s}.div__tak{max-width:800px;margin:0 auto;padding:20px 10px}.header{display:flex;justify-content:space-between;align-items:center;padding:15px 25px;background-color:var(--color-card-bg);box-shadow:var(--shadow-soft);position:sticky;top:0;z-index:1000}.logo{font-size:1.6rem;font-weight:800;color:var(--color-primary);text-decoration:none;letter-spacing:-0.5px}.action-icons{display:flex;gap:15px}.icon-btn{background:none;border:none;cursor:pointer;color:var(--color-text);font-size:1.5rem;padding:5px;border-radius:50%;transition:all 0.2s}.icon-btn:hover{color:var(--color-primary);background-color:var(--color-bg-main)}#contact-admin-btn iconify-icon{font-size:1.3rem;icon:'mdi:facebook';border:2px solid var(--color-text);border-radius:50%;padding:3px;color:#4267B2;background-color:var(--color-bg-light)}#contact-admin-btn:hover iconify-icon{border-color:#4267B2;color:var(--color-primary)}.main-card{background-color:var(--color-card-bg);padding:30px 20px;border-radius:20px;box-shadow:var(--shadow-soft);text-align:center}.main-card h3{margin-bottom:5px;font-weight:600}input{display:none}label{width:100%;height:150px;margin-top:15px;border:3px dashed var(--color-primary);border-radius:15px;color:var(--color-primary);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;cursor:pointer;background-color:transparent;transition:background-color 0.3s,border-color 0.3s}label:hover{background-color:rgba(var(--color-primary-light),.1)}iconify-icon{font-size:36px}#span{font-weight:700}#img_div{margin-top:20px;background-color:var(--color-bg-main);border-radius:12px;padding:15px;border:1px solid var(--color-border)}#img_div img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:6px;box-shadow:var(--shadow-soft)}#imageCanvas{display:none}.action-bar-bottom{display:flex;justify-content:center;gap:15px;margin-top:20px}.btn-primary{background-color:var(--color-primary)!important;border-color:var(--color-primary)!important;color:var(--color-bg-light)!important;font-weight:bold;border-radius:8px;padding:10px 25px;transition:all 0.2s}.btn-primary:hover{background-color:var(--color-primary-light)!important;transform:translateY(-1px)}.btn-closs{background-color:#dc3545!important;border:none;color:white!important;border-radius:8px;padding:10px 15px;font-size:1.1rem}
+/* Reset Button ကို အနီရောင် ပုံသေထားသော CSS */
+:root[data-theme="light"]{--color-primary:#0D6EFD;--color-primary-light:#4c8fee;--color-text:#212529;--color-bg-light:#ffffff;--color-bg-main:#f8f9fa;--color-card-bg:#ffffff;--color-border:#dee2e6;--shadow-soft:0 4px 12px rgba(0,0,0,0.1);--shadow-preview:0 8px 24px rgba(0,0,0,0.2)}
+:root[data-theme="dark"]{--color-primary:#58b368;--color-primary-light:#6dc77f;--color-text:#e9ecef;--color-bg-light:#2c313a;--color-bg-main:#212529;--color-card-bg:#2c313a;--color-border:#444c5c;--shadow-soft:0 4px 12px rgba(0,0,0,0.4);--shadow-preview:0 8px 24px rgba(0,0,0,0.6)}
+
+body{margin:0;font-family:'Inter',sans-serif;background-color:var(--color-bg-main);color:var(--color-text);transition:background-color 0.4s,color 0.4s}
+.div__tak{max-width:800px;margin:0 auto;padding:20px 10px}
+.header{display:flex;justify-content:space-between;align-items:center;padding:15px 25px;background-color:var(--color-card-bg);box-shadow:var(--shadow-soft);position:sticky;top:0;z-index:1000}
+.logo{font-size:1.6rem;font-weight:800;color:var(--color-primary);text-decoration:none;letter-spacing:-0.5px}
+.action-icons{display:flex;gap:15px}
+.icon-btn{background:none;border:none;cursor:pointer;color:var(--color-text);font-size:1.5rem;padding:5px;border-radius:50%;transition:all 0.2s}
+.icon-btn:hover{color:var(--color-primary);background-color:var(--color-bg-main)}
+#contact-admin-btn iconify-icon{font-size:1.3rem;icon:'mdi:facebook';border:2px solid var(--color-text);border-radius:50%;padding:3px;color:#4267B2;background-color:var(--color-bg-light)}
+#contact-admin-btn:hover iconify-icon{border-color:#4267B2;color:var(--color-primary)}
+
+/* Main Card Style */
+.main-card{
+    background-color: var(--color-card-bg);
+    padding: 30px 20px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    text-align: center;
+    position: relative; /* Reset Button ကို နေရာချဖို့ */
+}
+.main-card h3{margin-bottom:5px;font-weight:600}
+input{display:none}
+
+/* 1. Upload Section Design (ပိုမိုကြီးမား ဆွဲဆောင်မှုရှိ) */
+label{
+    width: 100%;
+    height: 220px; 
+    margin-top: 20px;
+    border: 3px dashed var(--color-primary);
+    border-radius: 15px;
+    color: var(--color-primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    background-color: transparent;
+    transition: all 0.3s ease-in-out;
+}
+label:hover{
+    /* Hover effect ကို ပိုလှအောင် ပြင်ခြင်း */
+    background-color: rgba(var(--color-primary-light), 0.05);
+    border-color: var(--color-primary-light);
+    transform: translateY(-2px);
+}
+iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြီးအောင် လုပ်ခြင်း */
+#span{font-weight:700; font-size: 1.1rem;}
+
+/* 2. Generated Image Preview Design */
+#img_div{
+    margin-top: 25px;
+    background-color: var(--color-bg-main);
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-preview); /* ပိုမိုထင်ပေါ်အောင် shadow ထည့်ခြင်း */
+}
+#img_div img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:6px;box-shadow:var(--shadow-soft)}
+#imageCanvas{display:none}
+
+/* Action Bar (Download Button) */
+.action-bar-bottom{
+    display:flex;
+    justify-content:center;
+    margin-top:20px;
+}
+.btn-primary{
+    /* Download Button ကို အပြည့်လုပ်ခြင်း */
+    width: 100%; 
+    background-color:var(--color-primary)!important;
+    border-color:var(--color-primary)!important;
+    color:var(--color-bg-light)!important;
+    font-weight:bold;
+    border-radius:8px;
+    padding:12px 25px; /* ပိုကြီးအောင် လုပ်ခြင်း */
+    transition:all 0.2s;
+    font-size: 1.1rem;
+    margin-top: 20px; /* Preview နဲ့ ခွာပေးခြင်း */
+}
+.btn-primary:hover{background-color:var(--color-primary-light)!important;transform:translateY(-1px)}
+
+/* Reset Button ကို ညာဘက်အပေါ်ထောင့်သို့ ရွှေ့ခြင်း */
+#resetBtn{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #dc3545!important;
+    border: none;
+    color: white!important;
+    border-radius: 50%; /* လုံးဝန်းသောပုံစံ */
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-soft);
+    z-index: 10;
+}
+#resetBtn:hover{
+    background-color: #c82333!important;
+    transform: scale(1.05);
+}
+
+/* Mobile Adjustments (3. Mobile/Responsive) */
+@media (max-width: 600px) {
+    .header {
+        padding: 10px 15px; /* header padding လျှော့ချခြင်း */
+    }
+    .main-card {
+        padding: 20px 15px;
+    }
+    label {
+        height: 180px; /* Mobile မှာ အနည်းငယ် သေးငယ်အောင် လုပ်ခြင်း */
+        gap: 10px;
+    }
+    iconify-icon {
+        font-size: 40px;
+    }
+    .btn-primary {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}
 </style>
 </head>
 <body>
@@ -53,13 +182,14 @@
 
 <div class="main-card preview-section" id="preview-card" style="display:none;">
     <h3>Generated Mockup</h3>
+    <button class="btn-closs fa fa-times" id="resetBtn" onClick="resetBtn()"></button> 
+
     <canvas id="imageCanvas"></canvas>
     
     <div id="img_div"></div>
     
     <div id="project" class="action-bar-bottom"><p class="ex1">
         <button class="btn btn-primary" id="download"><i class="fa fa-download"></i> Download Image</button>
-        <button class="btn-closs fa fa-times" id="resetBtn" onClick="resetBtn()"></button>
     </p></div>
 </div>
 
@@ -72,7 +202,6 @@
     var _0x2c68=['\x68\x74\x74\x70\x73\x3A\x2F\x2F\x77\x77\x77\x2E\x66\x61\x63\x65\x62\x6F\x6F\x6B\x2E\x63\x6F\x6D\x2F\x73\x68\x61\x72\x65\x2F\x31\x42\x69\x76\x38\x61\x67\x64\x4D\x43\x2F','\x2E\x2E\x2F\x62\x65\x7A\x65\x6C\x6C\x65\x73\x73\x5F\x77\x67\x72\x61\x79\x2E\x70\x6E\x67'];
     
     // Base64 Encoded Firebase Config Object (သင့်ရဲ့ လျှို့ဝှက်ချက်များ)
-    // const firebaseConfig ကို ဝှက်ထားခြင်း
     const _0xfirebaseConfig = 'eyJhcGlLZXkiOiJBSXphU3lDOU5wcjltRHVCMl84ZUl0dk0tU1lrSjgxM2VsOXdOQlUiLCJhdXRoRG9tYWluIjoiZG1vNjktYjc2N2EuZmlyZWJhc2VhcHAuY29tIiwiZGF0YWJhc2VVUkwiOiJodHRwczovL2RtbzY5LWI3NjdhLWRlZmF1bHQtcnRkYi5hc2lhLXNvdXRoZWFzdDEuZmlyZWJhc2VkYXRhYmFzZS5hcHAiLCJwcm9qZWN0SWQiOiJkbW82OS1iNzY3YSIsInN0b3JhZ2VCdWNrZXQiOiJkbW82OS1iNzY3YS5maXJlYmFzZXN0b3JhZ2UuYXBwIiwibWVzc2FnaW5nU2VuZGVySWQiOiIyMzg0NDYwNDMxNDciLCJhcHBJZCI6IjE6MjM4NDQ2MDQzMTQ3OndlYjoxOGVkYzAyZTQzM2RhZjE5MDUyNzAiLCJtZWFzdXJlbWVudElkIjoiRy1TSllTVkpMRVNRIn0=';
 
 
