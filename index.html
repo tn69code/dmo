@@ -72,10 +72,10 @@
     var _0x2c68=['\x68\x74\x74\x70\x73\x3A\x2F\x2F\x77\x77\x77\x2E\x66\x61\x63\x65\x62\x6F\x6F\x6B\x2E\x63\x6F\x6D\x2F\x73\x68\x61\x72\x65\x2F\x31\x42\x69\x76\x38\x61\x67\x64\x4D\x43\x2F','\x2E\x2E\x2F\x62\x65\x7A\x65\x6C\x6C\x65\x73\x73\x5F\x77\x67\x72\x61\x79\x2E\x70\x6E\x67'];
     
     // ======================================
-    // 2. FIREBASE SETUP & GLOBAL COUNTER LOGIC (FINAL CONFIG)
+    // 2. FIREBASE SETUP & GLOBAL COUNTER LOGIC
     // ======================================
 
-    // *** သင့်ရဲ့ တိကျသော Firebase Config Object ကို ထည့်သွင်းပြီးစီးပါပြီ ***
+    // *** သင့်ရဲ့ တိကျသော Firebase Config Object ***
     const firebaseConfig = {
       apiKey: "AIzaSyC9Npr9mDuB2_8eItvM-SYkJ813el9wNBU",
       authDomain: "dmo69-b767a.firebaseapp.com",
@@ -93,9 +93,7 @@
     // Realtime Database ထဲတွင် "mockup_count/total" လိပ်စာအောက်၌ စုစုပေါင်းအရေအတွက် သိမ်းမည်။
     const countRef = database.ref('mockup_count/total'); 
 
-    // Limit System: 0 = Not Processed, 1 = Processed (Session-based)
-    // ဤ Local Storage ကို အသုံးပြု၍ User တစ်ဦးချင်းစီအတွက် တစ်ခါသာ Count တိုးရန် ထိန်းချုပ်ထားသည်။
-    let imageCount = 0; 
+    // Session Limit စစ်ဆေးခြင်း Logic များကို ဖြုတ်လိုက်ပြီ။
     
     // Global Count တန်ဖိုးကို Firebase မှ ဖတ်ယူပြီး Website တွင် ပြသခြင်း
     function listenForMockupCount() {
@@ -117,17 +115,11 @@
             // null သို့မဟုတ် undefined ဖြစ်နေပါက 0 အနေနဲ့ စတင်ပြီး +1 တိုးပါ
             return (currentCount || 0) + 1; 
         });
-        // ဤ Local Storage ကို သုံး၍ ဤ Browser တွင် နောက်တစ်ခါ ထပ်မလုပ်ရစေရန် session limit ထားခြင်း
-        localStorage.setItem('dmo_session_limit', '1'); 
+        // Local Storage Session Limit လည်း ဖြုတ်ထားပြီး ဖြစ်သည်။
     }
     
     // Load the global count when the page loads
     listenForMockupCount();
-    
-    // Local Session Limit အတွက် စစ်ဆေးခြင်း
-    function checkSessionLimit() {
-        return localStorage.getItem('dmo_session_limit') === '1';
-    }
 
 
     // ======================================
@@ -171,12 +163,7 @@
     var ctx = canvas.getContext("2d");
     
     function handleImage(e) {
-        // Session Limit Check: ပုံတစ်ပုံ လုပ်ပြီးပြီးသားလား စစ်ဆေးခြင်း
-        if (imageCount >= 1 || checkSessionLimit()) {
-            alert("ဤ session အတွက် ပုံတစ်ပုံသာ လုပ်ခွင့်ရပါသည်၊ နောက်ထပ်ပုံလုပ်ရန် Reset ခလုတ်ကို နှိပ်ပါ။");
-            e.target.value = null;
-            return; 
-        }
+        // *** Session Limit စစ်ဆေးခြင်းကို ဖယ်ရှားလိုက်ပြီ ***
         
         document.getElementById('preview-card').style.display = 'block'; 
         document.getElementById('img_div').innerHTML = ''; 
@@ -206,7 +193,6 @@
                         document.getElementById("img_div").appendChild(this);
                         
                         // ** Global Counter Update: Firebase သို့ Count တိုးရန် ပို့ခြင်း **
-                        imageCount = 1; 
                         incrementMockupCount(); 
                     };
                     fileToSave.src = base64;
@@ -242,9 +228,7 @@
         document.getElementById('img_div').innerHTML = ''; 
         document.getElementById("imageLoader").value = null; 
         
-        // Local session counter ကို ပြန်လည်သတ်မှတ်ခြင်း
-        imageCount = 0; 
-        localStorage.removeItem('dmo_session_limit');
+        // Reset လုပ်ရန် လိုအပ်သော Local Session Limit များလည်း ဖြုတ်ထားပြီး ဖြစ်သည်။
         
         alert("Mockup Tool ကို ပြန်လည်အသုံးပြုရန် အဆင်သင့်ဖြစ်ပါပြီ။");
     }
