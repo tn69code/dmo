@@ -146,6 +146,16 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
         font-size: 1rem;
     }
 }
+
+/* ***** NEW FIX FOR DARK MODE COUNT DISPLAY ***** */
+/* Dark Mode တွင် Count စာသား မပျောက်စေရန် ပြင်ဆင်ခြင်း */
+:root[data-theme="dark"] #mockupCountDisplay {
+    color: #ced4da !important; /* light gray အရောင်ဖြင့် ပြသရန် */
+}
+:root[data-theme="light"] #mockupCountDisplay {
+    color: #6c757d !important; /* Light Mode မှာ ပုံမှန် မီးခိုးရောင် ပြသရန် */
+}
+/* ********************************************* */
 </style>
 </head>
 <body>
@@ -349,7 +359,7 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
         document.getElementById('img_div').innerHTML = ''; 
         document.getElementById("imageLoader").value = null; 
         
-        alert("Mockup Tool ကို ပြန်လည်အသုံးပြုရန် အဆင်သင့်ဖြစ်ပါပြီ။");
+        alert("Mockup Tool ကို ပြန်လည်အသုံးပြုရန် အဆင်သင့်ဖြစ်ပါပြီ");
     }
 
 </script>
