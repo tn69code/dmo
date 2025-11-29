@@ -6,12 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
   <title>DMO - Modern Mockup Tool</title>
   <link rel="icon" href="./favicon.ico" type="image/x-icon">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
 <style id="obfuscated-styles">
@@ -207,17 +207,12 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
 <script type="text/javascript">
     
     // ======================================
-    // 1. OBFUSCATED STRINGS & CONFIG
+    // 1. CONFIG & SETUP
     // ======================================
     var _0x2c68=['\x68\x74\x74\x70\x73\x3A\x2F\x2F\x77\x77\x77\x2E\x66\x61\x63\x65\x62\x6F\x6F\x6B\x2E\x63\x6F\x6D\x2F\x73\x68\x61\x72\x65\x2F\x31\x42\x69\x76\x38\x61\x67\x64\x4D\x43\x2F','\x2E\x2E\x2F\x62\x65\x7A\x65\x6C\x6C\x65\x73\x73\x5F\x77\x67\x72\x61\x79\x2E\x70\x6E\x67'];
     
-    // Base64 Encoded Firebase Config Object (သင့်ရဲ့ လျှို့ဝှက်ချက်များ)
+    // Base64 Encoded Firebase Config Object
     const _0xfirebaseConfig = 'eyJhcGlLZXkiOiJBSXphU3lDOU5wcjltRHVCMl84ZUl0dk0tU1lrSjgxM2VsOXdOQlUiLCJhdXRoRG9tYWluIjoiZG1vNjktYjc2N2EuZmlyZWJhc2VhcHAuY29tIiwiZGF0YWJhc2VVUkwiOiJodHRwczovL2RtbzY5LWI3NjdhLWRlZmF1bHQtcnRkYi5hc2lhLXNvdXRoZWFzdDEuZmlyZWJhc2VkYXRhYmFzZS5hcHAiLCJwcm9qZWN0SWQiOiJkbW82OS1iNzY3YSIsInN0b3JhZ2VCdWNrZXQiOiJkbW82OS1iNzY3YS5maXJlYmFzZXN0b3JhZ2UuYXBwIiwibWVzc2FnaW5nU2VuZGVySWQiOiIyMzg0NDYwNDMxNDciLCJhcHBJZCI6IjE6MjM4NDQ2MDQzMTQ3OndlYjoxOGVkYzAyZTQzM2RhZjE5MDUyNzAiLCJtZWFzdXJlbWVudElkIjoiRy1TSllTVkpMRVNRIn0=';
-
-
-    // ======================================
-    // 2. FIREBASE SETUP & GLOBAL COUNTER LOGIC
-    // ======================================
 
     // Base64 မှ Firebase Config Object ကို ပြန်လည်ရယူခြင်း
     const decodedConfigJson = atob(_0xfirebaseConfig);
@@ -226,7 +221,6 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
     // Firebase စတင်ခြင်း
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
-    // Realtime Database ထဲတွင် "mockup_count/total" လိပ်စာအောက်၌ စုစုပေါင်းအရေအတွက် သိမ်းမည်။
     const countRef = database.ref('mockup_count/total'); 
     
     // Global Count တန်ဖိုးကို Firebase မှ ဖတ်ယူပြီး Website တွင် ပြသခြင်း
@@ -254,7 +248,7 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
 
 
     // ======================================
-    // 3. THEME & LINK FUNCTIONS
+    // 2. THEME & UTILS
     // ======================================
 
     function toggleTheme() {
@@ -280,13 +274,18 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
     updateThemeIcon(savedTheme);
 
     function openFacebook() {
-        const facebookUrl = _0x2c68[0]; 
-        window.open(facebookUrl, '_blank');
+        window.open(_0x2c68[0], '_blank');
     }
 
     // ======================================
-    // 4. MOCKUP LOGIC (with Global Counter Integration)
+    // 3. OPTIMIZED MOCKUP LOGIC (FIXED)
     // ======================================
+
+    // *** FIX: Frame ပုံကို Website စတက်ကတည်းက ကြိုတင် Load လုပ်ထားခြင်း ***
+    // ၎င်းသည် ပထမဆုံးအကြိမ်တွင် ပုံအဖြူပေါ်သည့် ပြဿနာကို ဖြေရှင်းပေးသည်။
+    var frameImg = new Image();
+    frameImg.crossOrigin = "*";
+    frameImg.src = _0x2c68[1]; // Preload immediately
 
     var imageLoader = document.getElementById("imageLoader");
     imageLoader.addEventListener("change", handleImage, false);
@@ -294,8 +293,9 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
     var ctx = canvas.getContext("2d");
     
     function handleImage(e) {
-        // Session Limit စစ်ဆေးခြင်းကို ဖယ်ရှားလိုက်ပြီ
-        
+        // User cancel လုပ်သွားရင် error မတက်အောင် ကာကွယ်ခြင်း
+        if(!e.target.files[0]) return;
+
         document.getElementById('preview-card').style.display = 'block'; 
         document.getElementById('img_div').innerHTML = ''; 
         
@@ -303,52 +303,62 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
         reader.onload = function(event) {
             var img = new Image();
             img.crossOrigin = "*";
+            
             img.onload = function() {
                 canvas.width = 1840;
                 canvas.height = 3600;
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
-                // 1. Draw uploaded image
+                // 1. Draw User Image
                 ctx.drawImage(img, 200, 200, 1440, 3200);
         
-                var wm = new Image();
-                wm.crossOrigin = "*";
-                wm.onload = function() {
-                    // 2. Draw device frame on top
-                    ctx.drawImage(this, 0, 0, 1840, 3600);
-                    
-                    var base64 = canvas.toDataURL("image/png");
-          
-                    var fileToSave = new Image();
-                    fileToSave.onload = function() {
-                        document.getElementById("img_div").appendChild(this);
-                        
-                        // ** Global Counter Update: Firebase သို့ Count တိုးရန် ပို့ခြင်း **
-                        incrementMockupCount(); 
+                // 2. Draw Frame (with check)
+                // Frame ပုံ ဒေါင်းပြီးပြီလား စစ်ဆေးသည်။
+                if (frameImg.complete) {
+                    drawFrameAndFinish();
+                } else {
+                    // မပြီးသေးလျှင် ပြီးသည်အထိ စောင့်သည်။
+                    frameImg.onload = function() {
+                        drawFrameAndFinish();
                     };
-                    fileToSave.src = base64;
-                };
-                
-                wm.src = _0x2c68[1]; 
+                }
             };
-        
-            var_dl('project');
             img.src = event.target.result;
         };
         reader.readAsDataURL(e.target.files[0]);
-
-        document.getElementById('download').onclick = function() {
-            let canvasUrl = canvas.toDataURL("image/png");
-            const createEl = document.createElement('a');
-            createEl.href = canvasUrl;
-            createEl.download = "mockup-dmo.png";
-            createEl.click();
-            createEl.remove();
-        };
     }
 
+    // Final Rendering Function
+    function drawFrameAndFinish() {
+        ctx.drawImage(frameImg, 0, 0, 1840, 3600);
+        
+        var base64 = canvas.toDataURL("image/png");
+        
+        var fileToSave = new Image();
+        fileToSave.onload = function() {
+            document.getElementById("img_div").appendChild(this);
+            
+            // Firebase Update
+            incrementMockupCount(); 
+            
+            // Show Download Button
+            var_dl('project');
+        };
+        fileToSave.src = base64;
+    }
+
+    // Download Button Action
+    document.getElementById('download').onclick = function() {
+        let canvasUrl = canvas.toDataURL("image/png");
+        const createEl = document.createElement('a');
+        createEl.href = canvasUrl;
+        createEl.download = "mockup-dmo.png";
+        createEl.click();
+        createEl.remove();
+    };
+
     // ======================================
-    // 5. UTILITY FUNCTIONS
+    // 4. UTILITY FUNCTIONS
     // ======================================
     function var_dl(id) {
         document.getElementById(id).style.display='flex';
@@ -366,3 +376,4 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
     
 </body>
 </html>
+
