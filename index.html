@@ -148,7 +148,6 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
 }
 
 /* ***** NEW FIX FOR DARK MODE COUNT DISPLAY ***** */
-/* Dark Mode တွင် Count စာသား မပျောက်စေရန် ပြင်ဆင်ခြင်း */
 :root[data-theme="dark"] #mockupCountDisplay {
     color: #ced4da !important; /* light gray အရောင်ဖြင့် ပြသရန် */
 }
@@ -207,23 +206,19 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
 <script type="text/javascript">
     
     // ======================================
-    // 1. CONFIG & SETUP
+    // 1. OBFUSCATED STRINGS & CONFIG
     // ======================================
     var _0x2c68=['\x68\x74\x74\x70\x73\x3A\x2F\x2F\x77\x77\x77\x2E\x66\x61\x63\x65\x62\x6F\x6F\x6B\x2E\x63\x6F\x6D\x2F\x73\x68\x61\x72\x65\x2F\x31\x42\x69\x76\x38\x61\x67\x64\x4D\x43\x2F','\x2E\x2E\x2F\x62\x65\x7A\x65\x6C\x6C\x65\x73\x73\x5F\x77\x67\x72\x61\x79\x2E\x70\x6E\x67'];
     
-    // Base64 Encoded Firebase Config Object
     const _0xfirebaseConfig = 'eyJhcGlLZXkiOiJBSXphU3lDOU5wcjltRHVCMl84ZUl0dk0tU1lrSjgxM2VsOXdOQlUiLCJhdXRoRG9tYWluIjoiZG1vNjktYjc2N2EuZmlyZWJhc2VhcHAuY29tIiwiZGF0YWJhc2VVUkwiOiJodHRwczovL2RtbzY5LWI3NjdhLWRlZmF1bHQtcnRkYi5hc2lhLXNvdXRoZWFzdDEuZmlyZWJhc2VkYXRhYmFzZS5hcHAiLCJwcm9qZWN0SWQiOiJkbW82OS1iNzY3YSIsInN0b3JhZ2VCdWNrZXQiOiJkbW82OS1iNzY3YS5maXJlYmFzZXN0b3JhZ2UuYXBwIiwibWVzc2FnaW5nU2VuZGVySWQiOiIyMzg0NDYwNDMxNDciLCJhcHBJZCI6IjE6MjM4NDQ2MDQzMTQ3OndlYjoxOGVkYzAyZTQzM2RhZjE5MDUyNzAiLCJtZWFzdXJlbWVudElkIjoiRy1TSllTVkpMRVNRIn0=';
 
-    // Base64 မှ Firebase Config Object ကို ပြန်လည်ရယူခြင်း
     const decodedConfigJson = atob(_0xfirebaseConfig);
     const firebaseConfig = JSON.parse(decodedConfigJson);
     
-    // Firebase စတင်ခြင်း
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
     const countRef = database.ref('mockup_count/total'); 
     
-    // Global Count တန်ဖိုးကို Firebase မှ ဖတ်ယူပြီး Website တွင် ပြသခြင်း
     function listenForMockupCount() {
         countRef.on('value', (snapshot) => {
             const count = snapshot.val() || 0;
@@ -236,19 +231,17 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
         });
     }
 
-    // Global Count တန်ဖိုးကို Firebase တွင် တစ်ခု တိုးပေးခြင်း
     function incrementMockupCount() {
         countRef.transaction((currentCount) => {
             return (currentCount || 0) + 1; 
         });
     }
     
-    // Load the global count when the page loads
     listenForMockupCount();
 
 
     // ======================================
-    // 2. THEME & UTILS
+    // 2. THEME & LINK FUNCTIONS
     // ======================================
 
     function toggleTheme() {
@@ -268,24 +261,22 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
         }
     }
     
-    // Load saved theme on startup
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
 
     function openFacebook() {
-        window.open(_0x2c68[0], '_blank');
+        const facebookUrl = _0x2c68[0]; 
+        window.open(facebookUrl, '_blank');
     }
 
     // ======================================
-    // 3. OPTIMIZED MOCKUP LOGIC (FIXED)
+    // 3. OPTIMIZED MOCKUP LOGIC (CRITICAL FIX)
     // ======================================
 
-    // *** FIX: Frame ပုံကို Website စတက်ကတည်းက ကြိုတင် Load လုပ်ထားခြင်း ***
-    // ၎င်းသည် ပထမဆုံးအကြိမ်တွင် ပုံအဖြူပေါ်သည့် ပြဿနာကို ဖြေရှင်းပေးသည်။
+    // *** FIX 1: Preload Frame Immediately ***
     var frameImg = new Image();
-    frameImg.crossOrigin = "*";
-    frameImg.src = _0x2c68[1]; // Preload immediately
+    frameImg.src = _0x2c68[1]; 
 
     var imageLoader = document.getElementById("imageLoader");
     imageLoader.addEventListener("change", handleImage, false);
@@ -293,61 +284,69 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
     var ctx = canvas.getContext("2d");
     
     function handleImage(e) {
-        // User cancel လုပ်သွားရင် error မတက်အောင် ကာကွယ်ခြင်း
-        if(!e.target.files[0]) return;
-
+        if (!e.target.files[0]) return;
+        
         document.getElementById('preview-card').style.display = 'block'; 
         document.getElementById('img_div').innerHTML = ''; 
         
         var reader = new FileReader();
         reader.onload = function(event) {
             var img = new Image();
-            img.crossOrigin = "*";
-            
-            img.onload = function() {
-                canvas.width = 1840;
-                canvas.height = 3600;
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                // 1. Draw User Image
-                ctx.drawImage(img, 200, 200, 1440, 3200);
-        
-                // 2. Draw Frame (with check)
-                // Frame ပုံ ဒေါင်းပြီးပြီလား စစ်ဆေးသည်။
-                if (frameImg.complete) {
-                    drawFrameAndFinish();
-                } else {
-                    // မပြီးသေးလျှင် ပြီးသည်အထိ စောင့်သည်။
-                    frameImg.onload = function() {
-                        drawFrameAndFinish();
-                    };
-                }
-            };
+            // Removed crossOrigin for user uploaded blob (not needed for local file)
             img.src = event.target.result;
+            
+            // *** FIX 2: Use img.decode() to prevent WHITE SCREEN ***
+            // This ensures the image is fully processed by the browser before drawing
+            img.decode()
+            .then(() => {
+                renderMockup(img);
+            })
+            .catch((err) => {
+                // Fallback if decode fails
+                console.warn("Decode failed, using onload", err);
+                img.onload = function() {
+                    renderMockup(img);
+                };
+            });
         };
         reader.readAsDataURL(e.target.files[0]);
     }
 
-    // Final Rendering Function
+    function renderMockup(userImg) {
+        canvas.width = 1840;
+        canvas.height = 3600;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // *** FIX 3: Fill Black to prevent White Gaps ***
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(200, 200, 1440, 3200);
+
+        // Draw uploaded image with BLEED (Slightly larger than frame hole)
+        ctx.drawImage(userImg, 198, 198, 1444, 3204);
+
+        // Draw device frame on top
+        if (frameImg.complete && frameImg.naturalWidth > 0) {
+            drawFrameAndFinish();
+        } else {
+            frameImg.onload = function() {
+                drawFrameAndFinish();
+            };
+        }
+    }
+
     function drawFrameAndFinish() {
         ctx.drawImage(frameImg, 0, 0, 1840, 3600);
         
         var base64 = canvas.toDataURL("image/png");
-        
         var fileToSave = new Image();
         fileToSave.onload = function() {
             document.getElementById("img_div").appendChild(this);
-            
-            // Firebase Update
             incrementMockupCount(); 
-            
-            // Show Download Button
             var_dl('project');
         };
         fileToSave.src = base64;
     }
 
-    // Download Button Action
     document.getElementById('download').onclick = function() {
         let canvasUrl = canvas.toDataURL("image/png");
         const createEl = document.createElement('a');
