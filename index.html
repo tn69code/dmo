@@ -1,378 +1,318 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="my" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-  <title>DMO - Modern Mockup Tool</title>
-  <link rel="icon" href="./favicon.ico" type="image/x-icon">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DMO - Mockup Tools Collection</title>
   
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <!-- CSS Libraries -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
 
-<style id="obfuscated-styles">
-/* Reset Button ကို အနီရောင် ပုံသေထားသော CSS */
-:root[data-theme="light"]{--color-primary:#0D6EFD;--color-primary-light:#4c8fee;--color-text:#212529;--color-bg-light:#ffffff;--color-bg-main:#f8f9fa;--color-card-bg:#ffffff;--color-border:#dee2e6;--shadow-soft:0 4px 12px rgba(0,0,0,0.1);--shadow-preview:0 8px 24px rgba(0,0,0,0.2)}
-:root[data-theme="dark"]{--color-primary:#58b368;--color-primary-light:#6dc77f;--color-text:#e9ecef;--color-bg-light:#2c313a;--color-bg-main:#212529;--color-card-bg:#2c313a;--color-border:#444c5c;--shadow-soft:0 4px 12px rgba(0,0,0,0.4);--shadow-preview:0 8px 24px rgba(0,0,0,0.6)}
-
-body{margin:0;font-family:'Inter',sans-serif;background-color:var(--color-bg-main);color:var(--color-text);transition:background-color 0.4s,color 0.4s}
-.div__tak{max-width:800px;margin:0 auto;padding:20px 10px}
-.header{display:flex;justify-content:space-between;align-items:center;padding:15px 25px;background-color:var(--color-card-bg);box-shadow:var(--shadow-soft);position:sticky;top:0;z-index:1000}
-.logo{font-size:1.6rem;font-weight:800;color:var(--color-primary);text-decoration:none;letter-spacing:-0.5px}
-.action-icons{display:flex;gap:15px}
-.icon-btn{background:none;border:none;cursor:pointer;color:var(--color-text);font-size:1.5rem;padding:5px;border-radius:50%;transition:all 0.2s}
-.icon-btn:hover{color:var(--color-primary);background-color:var(--color-bg-main)}
-#contact-admin-btn iconify-icon{font-size:1.3rem;icon:'mdi:facebook';border:2px solid var(--color-text);border-radius:50%;padding:3px;color:#4267B2;background-color:var(--color-bg-light)}
-#contact-admin-btn:hover iconify-icon{border-color:#4267B2;color:var(--color-primary)}
-
-/* Main Card Style */
-.main-card{
-    background-color: var(--color-card-bg);
-    padding: 30px 20px;
-    border-radius: 20px;
-    box-shadow: var(--shadow-soft);
-    text-align: center;
-    position: relative; /* Reset Button ကို နေရာချဖို့ */
-}
-.main-card h3{margin-bottom:5px;font-weight:600}
-input{display:none}
-
-/* 1. Upload Section Design (ပိုမိုကြီးမား ဆွဲဆောင်မှုရှိ) */
-label{
-    width: 100%;
-    height: 220px; 
-    margin-top: 20px;
-    border: 3px dashed var(--color-primary);
-    border-radius: 15px;
-    color: var(--color-primary);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    cursor: pointer;
-    background-color: transparent;
-    transition: all 0.3s ease-in-out;
-}
-label:hover{
-    /* Hover effect ကို ပိုလှအောင် ပြင်ခြင်း */
-    background-color: rgba(var(--color-primary-light), 0.05);
-    border-color: var(--color-primary-light);
-    transform: translateY(-2px);
-}
-iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြီးအောင် လုပ်ခြင်း */
-#span{font-weight:700; font-size: 1.1rem;}
-
-/* 2. Generated Image Preview Design */
-#img_div{
-    margin-top: 25px;
-    background-color: var(--color-bg-main);
-    border-radius: 12px;
-    padding: 15px;
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-preview); /* ပိုမိုထင်ပေါ်အောင် shadow ထည့်ခြင်း */
-}
-#img_div img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:6px;box-shadow:var(--shadow-soft)}
-#imageCanvas{display:none}
-
-/* Action Bar (Download Button) */
-.action-bar-bottom{
-    display:flex;
-    justify-content:center;
-    margin-top:20px;
-}
-.btn-primary{
-    /* Download Button ကို အပြည့်လုပ်ခြင်း */
-    width: 100%; 
-    background-color:var(--color-primary)!important;
-    border-color:var(--color-primary)!important;
-    color:var(--color-bg-light)!important;
-    font-weight:bold;
-    border-radius:8px;
-    padding:12px 25px; /* ပိုကြီးအောင် လုပ်ခြင်း */
-    transition:all 0.2s;
-    font-size: 1.1rem;
-    margin-top: 20px; /* Preview နဲ့ ခွာပေးခြင်း */
-}
-.btn-primary:hover{background-color:var(--color-primary-light)!important;transform:translateY(-1px)}
-
-/* Reset Button ကို ညာဘက်အပေါ်ထောင့်သို့ ရွှေ့ခြင်း */
-#resetBtn{
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background-color: #dc3545!important;
-    border: none;
-    color: white!important;
-    border-radius: 50%; /* လုံးဝန်းသောပုံစံ */
-    width: 35px;
-    height: 35px;
-    padding: 0;
-    font-size: 1rem;
-    line-height: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: var(--shadow-soft);
-    z-index: 10;
-}
-#resetBtn:hover{
-    background-color: #c82333!important;
-    transform: scale(1.05);
-}
-
-/* Mobile Adjustments (3. Mobile/Responsive) */
-@media (max-width: 600px) {
-    .header {
-        padding: 10px 15px; /* header padding လျှော့ချခြင်း */
+  <style>
+    /* Theme Variables */
+    :root {
+      --primary-color: #0D6EFD;
+      --primary-hover: #0b5ed7;
+      --bg-color: #f8f9fa;
+      --text-color: #212529; /* Light Mode Text (Black/Dark Gray) */
+      --text-muted: #6c757d;
+      --card-bg: #ffffff;
+      --card-hover-bg: #f1f7ff;
+      --border-color: rgba(0,0,0,0.05);
+      --navbar-bg: #ffffff;
     }
-    .main-card {
-        padding: 20px 15px;
-    }
-    label {
-        height: 180px; /* Mobile မှာ အနည်းငယ် သေးငယ်အောင် လုပ်ခြင်း */
-        gap: 10px;
-    }
-    iconify-icon {
-        font-size: 40px;
-    }
-    .btn-primary {
-        padding: 10px 20px;
-        font-size: 1rem;
-    }
-}
 
-/* ***** NEW FIX FOR DARK MODE COUNT DISPLAY ***** */
-:root[data-theme="dark"] #mockupCountDisplay {
-    color: #ced4da !important; /* light gray အရောင်ဖြင့် ပြသရန် */
-}
-:root[data-theme="light"] #mockupCountDisplay {
-    color: #6c757d !important; /* Light Mode မှာ ပုံမှန် မီးခိုးရောင် ပြသရန် */
-}
-/* ********************************************* */
-</style>
+    /* Dark Mode Overrides */
+    [data-theme="dark"] {
+      --primary-color: #58b368;
+      --primary-hover: #4aa359;
+      --bg-color: #121212;
+      --text-color: #e0e0e0; /* Dark Mode Text (Light Gray/White) */
+      --text-muted: #adb5bd; /* Lighter muted text for readability */
+      --card-bg: #1e1e1e;
+      --card-hover-bg: #252525;
+      --border-color: rgba(255,255,255,0.1);
+      --navbar-bg: #1e1e1e;
+    }
+
+    body {
+      font-family: 'Inter', 'Padauk', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: var(--navbar-bg);
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+      padding: 15px 0;
+      transition: background-color 0.3s ease;
+    }
+    .navbar-brand {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--primary-color) !important;
+    }
+    
+    .nav-icons {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    .icon-btn {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--text-color);
+        cursor: pointer;
+        padding: 5px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+    }
+    .icon-btn:hover { color: var(--primary-color); }
+    
+    /* Facebook Icon Color Fix */
+    .fb-icon { color: #1877F2; }
+    [data-theme="dark"] .fb-icon { color: #4292ff; } /* Lighter blue for dark mode */
+
+    /* Hero Section */
+    .hero-section {
+      padding: 80px 20px 40px;
+      text-align: center;
+    }
+    .hero-title {
+      font-weight: 800;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      /* Gradient Text */
+      background: linear-gradient(45deg, var(--primary-color), #8a2be2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      /* Fallback for readability if gradient fails */
+      color: var(--primary-color); 
+    }
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted); /* Use variable for readability */
+      max-width: 600px;
+      margin: 0 auto 50px;
+      line-height: 1.6;
+    }
+
+    /* Tool Cards */
+    .tool-card {
+      background-color: var(--card-bg);
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+      border: 1px solid var(--border-color);
+      height: 100%;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .tool-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2); /* Stronger shadow */
+      background-color: var(--card-hover-bg);
+      border-color: var(--primary-color);
+    }
+
+    .icon-wrapper {
+      width: 80px;
+      height: 80px;
+      background-color: rgba(13, 110, 253, 0.1); /* Light mode tint */
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 25px;
+      transition: 0.3s;
+      color: var(--primary-color);
+    }
+    
+    [data-theme="dark"] .icon-wrapper {
+         background-color: rgba(88, 179, 104, 0.15); /* Dark mode tint */
+    }
+    
+    .tool-card:hover .icon-wrapper {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .tool-card h3 {
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--text-color); /* Ensure heading is visible */
+    }
+    
+    .tool-card p {
+        color: var(--text-muted); /* Ensure description is readable */
+    }
+    
+    .btn-custom {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      margin-top: 20px;
+      transition: 0.3s;
+      width: 100%;
+    }
+    .btn-custom:hover {
+      background-color: var(--primary-hover);
+      color: white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    /* Features */
+    .features-section {
+      padding: 60px 0;
+      margin-top: 40px;
+    }
+    .feature-item {
+      text-align: center;
+      padding: 20px;
+    }
+    .feature-icon {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+    .feature-item h5 { color: var(--text-color); font-weight: 700; }
+    .feature-item p { color: var(--text-muted); }
+
+    a { text-decoration: none; color: inherit; }
+
+  </style>
 </head>
 <body>
 
-<div class="header">
-    <a href="#" class="logo">DMO</a>
-    <div class="action-icons">
-        <button class="icon-btn" onclick="openFacebook()" id="contact-admin-btn" title="Contact via Facebook">
-            <iconify-icon icon="mdi:facebook"></iconify-icon>
-        </button>
-        <button class="icon-btn" onclick="toggleTheme()" id="theme-toggle" title="Toggle Light/Dark Mode">
+<!-- Navbar -->
+<nav class="navbar fixed-top">
+  <div class="container d-flex justify-content-between">
+    <a class="navbar-brand" href="#">DMO Tools</a>
+    
+    <div class="nav-icons">
+        <!-- Facebook Link -->
+        <a href="https://www.facebook.com/share/1AEcQn87f6" target="_blank" class="icon-btn" title="Contact Admin">
+            <iconify-icon icon="logos:facebook" class="fb-icon" style="font-size: 1.4rem;"></iconify-icon>
+        </a>
+        
+        <!-- Theme Toggle -->
+        <button class="icon-btn theme-toggle" onclick="toggleTheme()" title="Switch Theme">
             <iconify-icon icon="ic:round-light-mode"></iconify-icon>
         </button>
     </div>
-</div>
-
-<div class="div__tak card-container">
-
-<div class="main-card upload-section">
-    <h3>Mockup Generator</h3>
-    <p>Select a screenshot to perfectly fit the device frame.</p>
-    
-    <p class="mb-0 text-muted" id="mockupCountDisplay">
-        စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: Loading...
+  </div>
+</nav>
+<br>
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <h1 class="hero-title">Professional Mockups ဖန်တီးပါ</h1>
+    <p class="hero-subtitle">
+      သင့်ရဲ့ Screenshot ဓာတ်ပုံများနှင့် Screen Record ဗီဒီယိုများကို 
+      ဖုန်း Frame များဖြင့် လှပသပ်ရပ်သော Mockup များအဖြစ် စက္ကန့်ပိုင်းအတွင်း ပြောင်းလဲလိုက်ပါ
     </p>
 
-    <label for="imageLoader">
-        <iconify-icon icon="mdi:cloud-upload-outline"></iconify-icon>
-        <span id="span">Click or Drag Image Here (PNG or JPG)</span>
-        <input type="file" id="imageLoader" name="imageLoader" accept="image/*">
-    </label>
-</div>
+    <div class="row justify-content-center g-4 mt-2">
+      
+      <!-- Image Mockup Card -->
+      <div class="col-md-5 col-lg-4">
+        <a href="https://mm-dmo.duckdns.org/image/mockup" class="d-block text-decoration-none h-100">
+          <div class="tool-card">
+            <div class="icon-wrapper">
+              <iconify-icon icon="mdi:image-outline" style="font-size: 40px;"></iconify-icon>
+            </div>
+            <h3>Image Mockup</h3>
+            <p>သင့် Screenshot ပုံများကို ဖုန်း Frame ထဲသို့ ထည့်သွင်းပြီး ပုံအဖြစ် သိမ်းဆည်းပါ</p>
+            <button class="btn btn-custom">Get Started <iconify-icon icon="mdi:arrow-right" style="vertical-align: middle;"></iconify-icon></button>
+          </div>
+        </a>
+      </div>
 
+      <!-- Video Mockup Card -->
+      <div class="col-md-5 col-lg-4">
+        <a href="https://mm-dmo.duckdns.org/video/mockup" class="d-block text-decoration-none h-100">
+          <div class="tool-card">
+            <div class="icon-wrapper">
+              <iconify-icon icon="mdi:video-outline" style="font-size: 40px;"></iconify-icon>
+            </div>
+            <h3>Video Mockup</h3>
+            <p>Screen Record ဗီဒီယိုများကို ဖုန်း Frame ဖြင့် တကယ့်အစစ်အတိုင်း ဖန်တီးပါ</p>
+            <button class="btn btn-custom">Get Started <iconify-icon icon="mdi:arrow-right" style="vertical-align: middle;"></iconify-icon></button>
+          </div>
+        </a>
+      </div>
 
-<div class="main-card preview-section" id="preview-card" style="display:none;">
-    <h3>Generated Mockup</h3>
-    <button class="btn-closs fa fa-times" id="resetBtn" onClick="resetBtn()"></button> 
+    </div>
+  </div>
+</section>
 
-    <canvas id="imageCanvas"></canvas>
-    
-    <div id="img_div"></div>
-    
-    <div id="project" class="action-bar-bottom"><p class="ex1">
-        <button class="btn btn-primary" id="download"><i class="fa fa-download"></i> Download Image</button>
-    </p></div>
-</div>
+<!-- Features Section -->
+<section class="features-section">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4 feature-item">
+        <div class="feature-icon"><iconify-icon icon="mdi:lightning-bolt"></iconify-icon></div>
+        <h5>Fast Generation</h5>
+        <p>စောင့်ဆိုင်းစရာမလိုဘဲ ချက်ချင်းရယူနိုင်ခြင်း</p>
+      </div>
+      <div class="col-md-4 feature-item">
+        <div class="feature-icon"><iconify-icon icon="mdi:hd-box"></iconify-icon></div>
+        <h5>High Quality</h5>
+        <p>ပုံရိပ်ကြည်လင်ပြတ်သားသော ရလဒ်များ</p>
+      </div>
+      <div class="col-md-4 feature-item">
+        <div class="feature-icon"><iconify-icon icon="mdi:shield-check"></iconify-icon></div>
+        <h5>Secure & Free</h5>
+        <p>အခမဲ့အသုံးပြုနိုင်ပြီး လုံခြုံစိတ်ချရခြင်း</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-</div> 
-<script type="text/javascript">
-    
-    // ======================================
-    // 1. OBFUSCATED STRINGS & CONFIG
-    // ======================================
-    var _0x2c68=['\x68\x74\x74\x70\x73\x3A\x2F\x2F\x77\x77\x77\x2E\x66\x61\x63\x65\x62\x6F\x6F\x6B\x2E\x63\x6F\x6D\x2F\x73\x68\x61\x72\x65\x2F\x31\x42\x69\x76\x38\x61\x67\x64\x4D\x43\x2F','\x2E\x2E\x2F\x62\x65\x7A\x65\x6C\x6C\x65\x73\x73\x5F\x77\x67\x72\x61\x79\x2E\x70\x6E\x67'];
-    
-    const _0xfirebaseConfig = 'eyJhcGlLZXkiOiJBSXphU3lDOU5wcjltRHVCMl84ZUl0dk0tU1lrSjgxM2VsOXdOQlUiLCJhdXRoRG9tYWluIjoiZG1vNjktYjc2N2EuZmlyZWJhc2VhcHAuY29tIiwiZGF0YWJhc2VVUkwiOiJodHRwczovL2RtbzY5LWI3NjdhLWRlZmF1bHQtcnRkYi5hc2lhLXNvdXRoZWFzdDEuZmlyZWJhc2VkYXRhYmFzZS5hcHAiLCJwcm9qZWN0SWQiOiJkbW82OS1iNzY3YSIsInN0b3JhZ2VCdWNrZXQiOiJkbW82OS1iNzY3YS5maXJlYmFzZXN0b3JhZ2UuYXBwIiwibWVzc2FnaW5nU2VuZGVySWQiOiIyMzg0NDYwNDMxNDciLCJhcHBJZCI6IjE6MjM4NDQ2MDQzMTQ3OndlYjoxOGVkYzAyZTQzM2RhZjE5MDUyNzAiLCJtZWFzdXJlbWVudElkIjoiRy1TSllTVkpMRVNRIn0=';
+<footer class="text-center py-4 text-muted small">
+  <p class="mb-0">© 2026 DMO Mockup Tools</p>
+</footer>
 
-    const decodedConfigJson = atob(_0xfirebaseConfig);
-    const firebaseConfig = JSON.parse(decodedConfigJson);
+<script>
+  // Theme Toggle Logic
+  const themeBtn = document.querySelector('.theme-toggle iconify-icon');
+  
+  function toggleTheme() {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-    const countRef = database.ref('mockup_count/total'); 
-    
-    function listenForMockupCount() {
-        countRef.on('value', (snapshot) => {
-            const count = snapshot.val() || 0;
-            document.getElementById('mockupCountDisplay').innerText = 
-                `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: ${count}`;
-        }, (error) => {
-            console.error("Firebase Read Error:", error);
-            document.getElementById('mockupCountDisplay').innerText = 
-                `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: (Error Loading Count)`;
-        });
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('dmo-theme', newTheme);
+    updateIcon(newTheme);
+  }
+
+  function updateIcon(theme) {
+    if (theme === 'dark') {
+      themeBtn.setAttribute('icon', 'ic:round-dark-mode');
+    } else {
+      themeBtn.setAttribute('icon', 'ic:round-light-mode');
     }
+  }
 
-    function incrementMockupCount() {
-        countRef.transaction((currentCount) => {
-            return (currentCount || 0) + 1; 
-        });
-    }
-    
-    listenForMockupCount();
-
-
-    // ======================================
-    // 2. THEME & LINK FUNCTIONS
-    // ======================================
-
-    function toggleTheme() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon(newTheme);
-    }
-    
-    function updateThemeIcon(theme) {
-        const icon = document.getElementById('theme-toggle').querySelector('iconify-icon');
-        if (theme === 'dark') {
-            icon.setAttribute('icon', 'ic:round-dark-mode');
-        } else {
-            icon.setAttribute('icon', 'ic:round-light-mode');
-        }
-    }
-    
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    updateThemeIcon(savedTheme);
-
-    function openFacebook() {
-        const facebookUrl = _0x2c68[0]; 
-        window.open(facebookUrl, '_blank');
-    }
-
-    // ======================================
-    // 3. OPTIMIZED MOCKUP LOGIC (CRITICAL FIX)
-    // ======================================
-
-    // *** FIX 1: Preload Frame Immediately ***
-    var frameImg = new Image();
-    frameImg.src = _0x2c68[1]; 
-
-    var imageLoader = document.getElementById("imageLoader");
-    imageLoader.addEventListener("change", handleImage, false);
-    var canvas = document.getElementById("imageCanvas");
-    var ctx = canvas.getContext("2d");
-    
-    function handleImage(e) {
-        if (!e.target.files[0]) return;
-        
-        document.getElementById('preview-card').style.display = 'block'; 
-        document.getElementById('img_div').innerHTML = ''; 
-        
-        var reader = new FileReader();
-        reader.onload = function(event) {
-            var img = new Image();
-            // Removed crossOrigin for user uploaded blob (not needed for local file)
-            img.src = event.target.result;
-            
-            // *** FIX 2: Use img.decode() to prevent WHITE SCREEN ***
-            // This ensures the image is fully processed by the browser before drawing
-            img.decode()
-            .then(() => {
-                renderMockup(img);
-            })
-            .catch((err) => {
-                // Fallback if decode fails
-                console.warn("Decode failed, using onload", err);
-                img.onload = function() {
-                    renderMockup(img);
-                };
-            });
-        };
-        reader.readAsDataURL(e.target.files[0]);
-    }
-
-    function renderMockup(userImg) {
-        canvas.width = 1840;
-        canvas.height = 3600;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // *** FIX 3: Fill Black to prevent White Gaps ***
-        ctx.fillStyle = "#000000";
-        ctx.fillRect(200, 200, 1440, 3200);
-
-        // Draw uploaded image with BLEED (Slightly larger than frame hole)
-        ctx.drawImage(userImg, 198, 198, 1444, 3204);
-
-        // Draw device frame on top
-        if (frameImg.complete && frameImg.naturalWidth > 0) {
-            drawFrameAndFinish();
-        } else {
-            frameImg.onload = function() {
-                drawFrameAndFinish();
-            };
-        }
-    }
-
-    function drawFrameAndFinish() {
-        ctx.drawImage(frameImg, 0, 0, 1840, 3600);
-        
-        var base64 = canvas.toDataURL("image/png");
-        var fileToSave = new Image();
-        fileToSave.onload = function() {
-            document.getElementById("img_div").appendChild(this);
-            incrementMockupCount(); 
-            var_dl('project');
-        };
-        fileToSave.src = base64;
-    }
-
-    document.getElementById('download').onclick = function() {
-        let canvasUrl = canvas.toDataURL("image/png");
-        const createEl = document.createElement('a');
-        createEl.href = canvasUrl;
-        createEl.download = "mockup-dmo.png";
-        createEl.click();
-        createEl.remove();
-    };
-
-    // ======================================
-    // 4. UTILITY FUNCTIONS
-    // ======================================
-    function var_dl(id) {
-        document.getElementById(id).style.display='flex';
-    }
-    
-    function resetBtn() {
-        document.getElementById('preview-card').style.display = 'none'; 
-        document.getElementById('img_div').innerHTML = ''; 
-        document.getElementById("imageLoader").value = null; 
-        
-        alert("Mockup Tool ကို ပြန်လည်အသုံးပြုရန် အဆင်သင့်ဖြစ်ပါပြီ");
-    }
-
+  // Load Saved Theme
+  const savedTheme = localStorage.getItem('dmo-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateIcon(savedTheme);
 </script>
-    
+
 </body>
 </html>
-
