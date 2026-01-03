@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <title>DMO - Video Mockup</title>
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  
+  <style>
+    /* --- CSS Variables --- */
+    :root[data-theme="light"]{
+        --color-primary:#0D6EFD;
+        --color-primary-light:#4c8fee;
+        --color-text:#212529;
+        --color-bg-light:#ffffff;
+        --color-bg-main:#f8f9fa;
+        --color-card-bg:#ffffff;
+        --color-border:#dee2e6;
+        --shadow-soft:0 4px 12px rgba(0,0,0,0.1);
+        --shadow-preview:0 8px 24px rgba(0,0,0,0.2);
+        --color-mockup-bg: #ffffff; 
+    }
+    :root[data-theme="dark"]{
+        --color-primary:#58b368;
+        --color-primary-light:#6dc77f;
+        --color-text:#e9ecef;
+        --color-bg-light:#2c313a;
+        --color-bg-main:#212529;
+        --color-card-bg:#2c313a;
+        --color-border:#444c5c;
+        --shadow-soft:0 4px 12px rgba(0,0,0,0.4);
+        --shadow-preview:0 8px 24px rgba(0,0,0,0.6);
+        --color-mockup-bg: #2c313a; 
+    }
+
+    body{margin:0;font-family:'Inter',sans-serif;background-color:var(--color-bg-main);color:var(--color-text);transition:background-color 0.4s,color 0.4s}
+    .div__tak{max-width:800px;margin:0 auto;padding:20px 10px}
+
+    /* --- Header & Buttons --- */
+    .header{display:flex;justify-content:space-between;align-items:center;padding:15px 25px;background-color:var(--color-card-bg);box-shadow:var(--shadow-soft);position:sticky;top:0;z-index:1000}
+    .logo{font-size:1.6rem;font-weight:800;color:var(--color-primary);text-decoration:none;letter-spacing:-0.5px}
+    
+    .action-icons{display:flex;gap:12px;align-items: center;}
+    
+    .icon-btn {
+        background: transparent;
+        border: 2px solid transparent;
+        cursor: pointer;
+        color: var(--color-text);
+        font-size: 1.4rem;
+        width: 42px; 
+        height: 42px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        transition: all 0.2s;
+        padding: 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .icon-btn:hover {
+        background-color: var(--color-bg-main);
+        color: var(--color-primary);
+        transform: translateY(-2px);
+    }
+    
+    #contact-admin-btn iconify-icon{ color:#1877F2; }
+    
+    /* --- Main Layout --- */
+    .main-card{
+        background-color: var(--color-card-bg);
+        padding: 30px 20px;
+        border-radius: 20px;
+        box-shadow: var(--shadow-soft);
+        text-align: center;
+        margin-bottom: 20px;
+        border: 1px solid var(--color-border);
+    }
+    .main-card h3{margin-bottom:5px;font-weight:700;}
+
+    #mockupCountDisplay {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+    :root[data-theme="dark"] #mockupCountDisplay { color: #adb5bd; }
+
+    label.upload-label{
+        width: 100%;
+        height: 220px; 
+        margin-top: 10px;
+        border: 3px dashed var(--color-primary);
+        border-radius: 15px;
+        color: var(--color-primary);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        cursor: pointer;
+        background-color: rgba(var(--color-primary-light), 0.02);
+        transition: all 0.3s ease-in-out;
+    }
+    label.upload-label:hover{
+        background-color: rgba(var(--color-primary-light), 0.1);
+        transform: translateY(-2px);
+    }
+    input{display:none}
+    
+    .mockup-wrapper {
+        position: relative;
+        width: 280px; 
+        margin: 0 auto;
+        margin-top: 25px;
+        aspect-ratio: 1840 / 3600; 
+        box-shadow: var(--shadow-preview);
+        border-radius: 40px; 
+        overflow: hidden; 
+        background-color: var(--color-mockup-bg); 
+        transition: background-color 0.4s;
+    }
+
+    #userVideo {
+        position: absolute;
+        top: 5.5%; 
+        left: 10.76%;
+        width: 78.48%;
+        height: 89%;
+        object-fit: cover;
+        z-index: 1;
+        background-color: #000; 
+    }
+
+    #phoneFrame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .controls { margin-top: 25px; display: flex; flex-direction: column; gap: 12px; align-items: center;}
+    .btn-group-action { display: flex; gap: 10px; width: 100%; justify-content: center; }
+    
+    .btn-primary{
+        background-color:var(--color-primary)!important;
+        border:none!important;
+        color:var(--color-bg-light)!important;
+        font-weight:bold;
+        border-radius:12px;
+        padding:14px 20px;
+        width: 100%;
+        font-size: 1rem;
+        box-shadow: 0 4px 6px rgba(var(--color-primary), 0.3);
+    }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-outline-primary, .btn-danger { border-radius: 12px; }
+    #recordingCanvas { display: none; }
+    .processing-text {
+        color: var(--color-primary);
+        font-weight: 600;
+        display: none;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+  </style>
+</head>
+<body>
+
+<div class="header">
+    <a href="#" class="logo">DMO</a>
+    <div class="action-icons">
+        <button class="icon-btn" onclick="openFacebook()" id="contact-admin-btn" title="Contact via Facebook">
+            <iconify-icon icon="logos:facebook"></iconify-icon>
+        </button>
+        <button class="icon-btn" onclick="toggleTheme()" id="theme-toggle" title="Toggle Light/Dark Mode">
+            <iconify-icon icon="ic:round-light-mode"></iconify-icon>
+        </button>
+    </div>
+</div>
+
+<div class="div__tak">
+    <div class="main-card" id="uploadSection">
+        <h3>Video Mockup Tool</h3>
+        <p id="mockupCountDisplay">စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: Loading...</p>
+        <label class="upload-label" for="videoLoader">
+            <iconify-icon icon="mdi:cloud-upload-outline" style="font-size: 50px;"></iconify-icon>
+            <span style="font-weight: 700;">Click to Upload Video</span>
+            <input type="file" id="videoLoader" accept="video/*">
+        </label>
+    </div>
+
+    <div class="main-card" id="previewSection" style="display: none;">
+        <h3>Generated Video</h3>
+        <div class="mockup-wrapper">
+            <video id="userVideo" loop playsinline muted></video>
+            <img id="phoneFrame" src="https://raw.githubusercontent.com/tn69code/dmo/refs/heads/main/bezelless_wgray.png" alt="Phone Frame">
+        </div>
+
+        <div class="controls">
+            <p class="processing-text" id="procText">Creating Video (Processing)...<br>ကျေးဇူးပြု၍ ခဏစောင့်ပါ။</p>
+            <button class="btn btn-primary" id="downloadBtn" onclick="downloadVideo()">
+                <iconify-icon icon="mdi:download" style="font-size: 1.3rem; vertical-align: sub; margin-right: 5px;"></iconify-icon> 
+                Download Video
+            </button>
+            <div class="btn-group-action">
+                <button class="btn btn-outline-primary" style="flex:1;" onclick="togglePlay()">Play/Pause</button>
+                <button class="btn btn-danger" onclick="resetApp()">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<canvas id="recordingCanvas"></canvas>
+
+<script>
+    // ======================================
+    // 1. FIREBASE SETUP
+    // ======================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvLPN5H0pp4r5BX6ryAZuc1G5M9Rqs5Io",
+      authDomain: "video-mockup-test69.firebaseapp.com",
+      projectId: "video-mockup-test69",
+      // ဒီမှာ Database Link အမှန်ကို ထည့်သွင်းထားပါတယ်
+      databaseURL: "https://video-mockup-test69-default-rtdb.firebaseio.com", 
+      storageBucket: "video-mockup-test69.firebasestorage.app",
+      messagingSenderId: "880333812758",
+      appId: "1:880333812758:web:07bd9850b839fc0ad87137"
+    };
+    
+    if (!firebase.apps.length) {
+        try {
+            firebase.initializeApp(firebaseConfig);
+        } catch (e) {
+            console.error("Firebase Init Error:", e);
+        }
+    }
+    
+    // Safety check for database
+    let database, countRef;
+    try {
+        database = firebase.database();
+        countRef = database.ref('mockup_count/total');
+    } catch (e) {
+        console.error("Database connection failed. Please create Realtime Database in Console.");
+        document.getElementById('mockupCountDisplay').innerText = "စနစ်ချိတ်ဆက်မှု မအောင်မြင်ပါ (Console တွင် Database ဖွင့်ပါ)";
+    }
+    
+    function listenForMockupCount() {
+        if (!countRef) return;
+        countRef.on('value', (snapshot) => {
+            const count = snapshot.val() || 0;
+            document.getElementById('mockupCountDisplay').innerText = 
+                `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: ${count}`;
+        }, (error) => {
+            console.error("Read Error:", error);
+            // Permission denied or DB not found
+            document.getElementById('mockupCountDisplay').innerText = 
+                `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: (Connection Error - Check Rules)`;
+        });
+    }
+
+    function incrementMockupCount() {
+        if (!countRef) return;
+        countRef.transaction((currentCount) => {
+            return (currentCount || 0) + 1; 
+        });
+    }
+    listenForMockupCount();
+
+
+    // ======================================
+    // 2. APP LOGIC
+    // ======================================
+    const facebookUrl = 'https://www.facebook.com/share/1Biv8agdMC/';
+    const frameSrc = "https://raw.githubusercontent.com/tn69code/dmo/refs/heads/main/bezelless_wgray.png";
+    const SCALE_FACTOR = 0.5; 
+
+    const frameImg = new Image();
+    frameImg.crossOrigin = "anonymous";
+    frameImg.src = frameSrc;
+
+    const videoLoader = document.getElementById('videoLoader');
+    const userVideo = document.getElementById('userVideo');
+    const previewSection = document.getElementById('previewSection');
+    const uploadSection = document.getElementById('uploadSection');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const procText = document.getElementById('procText');
+    const themeIcon = document.querySelector('#theme-toggle iconify-icon');
+
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+    }
+
+    function updateThemeIcon(theme) {
+        if (theme === 'dark') {
+            themeIcon.setAttribute('icon', 'ic:round-dark-mode');
+        } else {
+            themeIcon.setAttribute('icon', 'ic:round-light-mode');
+        }
+    }
+    
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    function openFacebook() { window.open(facebookUrl, '_blank'); }
+
+    videoLoader.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const videoUrl = URL.createObjectURL(file);
+        userVideo.src = videoUrl;
+        userVideo.crossOrigin = "anonymous"; 
+        
+        uploadSection.style.display = 'none';
+        previewSection.style.display = 'block';
+        userVideo.play();
+    });
+
+    function togglePlay() {
+        if (userVideo.paused) userVideo.play();
+        else userVideo.pause();
+    }
+
+    function resetApp() {
+        userVideo.pause();
+        userVideo.src = "";
+        videoLoader.value = "";
+        previewSection.style.display = 'none';
+        uploadSection.style.display = 'block';
+        procText.style.display = 'none';
+        downloadBtn.disabled = false;
+        downloadBtn.innerHTML = '<iconify-icon icon="mdi:download" style="font-size: 1.3rem; vertical-align: sub; margin-right: 5px;"></iconify-icon> Download Video';
+    }
+
+    async function downloadVideo() {
+        if (!userVideo.src) return;
+        incrementMockupCount();
+
+        downloadBtn.disabled = true;
+        downloadBtn.innerText = "Generating... (Do not close)";
+        procText.style.display = "block";
+        
+        const canvas = document.getElementById('recordingCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        const w = 1840 * SCALE_FACTOR;
+        const h = 3600 * SCALE_FACTOR;
+        canvas.width = w;
+        canvas.height = h;
+
+        let mimeType = 'video/webm;codecs=vp9'; 
+        let fileExt = 'webm';
+        if (MediaRecorder.isTypeSupported('video/mp4')) {
+            mimeType = 'video/mp4';
+            fileExt = 'mp4';
+        } else if (MediaRecorder.isTypeSupported('video/webm;codecs=h264')) {
+             mimeType = 'video/webm;codecs=h264';
+        }
+
+        const stream = canvas.captureStream(30); 
+        try {
+            const audioStream = userVideo.captureStream ? userVideo.captureStream() : userVideo.mozCaptureStream ? userVideo.mozCaptureStream() : null;
+            if (audioStream && audioStream.getAudioTracks().length > 0) {
+                stream.addTrack(audioStream.getAudioTracks()[0]);
+            }
+        } catch(e) { console.warn("Audio capture warning:", e); }
+
+        const mediaRecorder = new MediaRecorder(stream, { mimeType: mimeType, videoBitsPerSecond: 2500000 });
+        const chunks = [];
+
+        mediaRecorder.ondataavailable = (e) => {
+            if (e.data.size > 0) chunks.push(e.data);
+        };
+
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(chunks, { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `dmo-mockup.${fileExt}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            downloadBtn.disabled = false;
+            downloadBtn.innerHTML = '<iconify-icon icon="mdi:download" style="font-size: 1.3rem; vertical-align: sub; margin-right: 5px;"></iconify-icon> Download Video';
+            procText.style.display = "none";
+            userVideo.loop = true;
+            userVideo.play();
+        };
+
+        userVideo.pause();
+        userVideo.currentTime = 0;
+        userVideo.loop = false; 
+        
+        mediaRecorder.start();
+        
+        try {
+            await userVideo.play();
+        } catch(err) {
+            console.error("Play failed:", err);
+            resetApp();
+            return;
+        }
+
+        function drawFrame() {
+            if (mediaRecorder.state === "inactive") return;
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            ctx.fillStyle = currentTheme === 'dark' ? "#2c313a" : "#ffffff";
+            ctx.fillRect(0, 0, w, h);
+            ctx.drawImage(userVideo, 198 * SCALE_FACTOR, 198 * SCALE_FACTOR, 1444 * SCALE_FACTOR, 3204 * SCALE_FACTOR);
+            if (frameImg.complete) {
+                ctx.drawImage(frameImg, 0, 0, w, h);
+            }
+            requestAnimationFrame(drawFrame);
+        }
+        drawFrame();
+
+        userVideo.onended = () => {
+            mediaRecorder.stop();
+        };
+    }
+</script>
+
+</body>
+</html>
+
