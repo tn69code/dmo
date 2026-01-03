@@ -9,7 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
   
-  <!-- Firebase Scripts -->
+  <!-- Firebase SDK (Version 8.10.0 - Stable for HTML) -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   
@@ -49,6 +49,7 @@
     
     .action-icons{display:flex;gap:12px;align-items: center;}
     
+    /* Round Buttons Fixed */
     .icon-btn {
         background: transparent;
         border: 2px solid transparent;
@@ -85,6 +86,7 @@
     }
     .main-card h3{margin-bottom:5px;font-weight:700;}
 
+    /* Count Display */
     #mockupCountDisplay {
         font-size: 0.9rem;
         color: #6c757d;
@@ -93,6 +95,7 @@
     }
     :root[data-theme="dark"] #mockupCountDisplay { color: #adb5bd; }
 
+    /* Upload Box */
     label.upload-label{
         width: 100%;
         height: 220px; 
@@ -115,6 +118,7 @@
     }
     input{display:none}
     
+    /* --- Video Preview --- */
     .mockup-wrapper {
         position: relative;
         width: 280px; 
@@ -124,6 +128,8 @@
         box-shadow: var(--shadow-preview);
         border-radius: 40px; 
         overflow: hidden; 
+        
+        /* Theme Aware Background */
         background-color: var(--color-mockup-bg); 
         transition: background-color 0.4s;
     }
@@ -149,6 +155,7 @@
         pointer-events: none;
     }
 
+    /* --- Controls --- */
     .controls { margin-top: 25px; display: flex; flex-direction: column; gap: 12px; align-items: center;}
     .btn-group-action { display: flex; gap: 10px; width: 100%; justify-content: center; }
     
@@ -165,7 +172,11 @@
     }
     .btn-primary:active { transform: scale(0.98); }
     .btn-outline-primary, .btn-danger { border-radius: 12px; }
+
+    /* Hidden Canvas */
     #recordingCanvas { display: none; }
+    
+    /* Processing Text */
     .processing-text {
         color: var(--color-primary);
         font-weight: 600;
@@ -175,10 +186,12 @@
         animation: pulse 1.5s infinite;
     }
     @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+
   </style>
 </head>
 <body>
 
+<!-- Header -->
 <div class="header">
     <a href="#" class="logo">DMO</a>
     <div class="action-icons">
@@ -192,9 +205,16 @@
 </div>
 
 <div class="div__tak">
+
+    <!-- Upload Section -->
     <div class="main-card" id="uploadSection">
         <h3>Video Mockup Tool</h3>
-        <p id="mockupCountDisplay">စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: Loading...</p>
+        
+        <!-- Mockup Count Display -->
+        <p id="mockupCountDisplay">
+            စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: Loading...
+        </p>
+
         <label class="upload-label" for="videoLoader">
             <iconify-icon icon="mdi:cloud-upload-outline" style="font-size: 50px;"></iconify-icon>
             <span style="font-weight: 700;">Click to Upload Video</span>
@@ -202,8 +222,10 @@
         </label>
     </div>
 
+    <!-- Preview Section -->
     <div class="main-card" id="previewSection" style="display: none;">
         <h3>Generated Video</h3>
+        
         <div class="mockup-wrapper">
             <video id="userVideo" loop playsinline muted></video>
             <img id="phoneFrame" src="https://raw.githubusercontent.com/tn69code/dmo/refs/heads/main/bezelless_wgray.png" alt="Phone Frame">
@@ -211,18 +233,22 @@
 
         <div class="controls">
             <p class="processing-text" id="procText">Creating Video (Processing)...<br>ကျေးဇူးပြု၍ ခဏစောင့်ပါ။</p>
+            
             <button class="btn btn-primary" id="downloadBtn" onclick="downloadVideo()">
                 <iconify-icon icon="mdi:download" style="font-size: 1.3rem; vertical-align: sub; margin-right: 5px;"></iconify-icon> 
                 Download Video
             </button>
+            
             <div class="btn-group-action">
                 <button class="btn btn-outline-primary" style="flex:1;" onclick="togglePlay()">Play/Pause</button>
                 <button class="btn btn-danger" onclick="resetApp()">Reset</button>
             </div>
         </div>
     </div>
+
 </div>
 
+<!-- Canvas -->
 <canvas id="recordingCanvas"></canvas>
 
 <script>
@@ -233,42 +259,54 @@
       apiKey: "AIzaSyCvLPN5H0pp4r5BX6ryAZuc1G5M9Rqs5Io",
       authDomain: "video-mockup-test69.firebaseapp.com",
       projectId: "video-mockup-test69",
-      // ဒီမှာ Database Link အမှန်ကို ထည့်သွင်းထားပါတယ်
-      databaseURL: "https://video-mockup-test69-default-rtdb.firebaseio.com", 
+      
+      // *************************************************************
+      // IMPORTANT: Database URL (Make sure this matches your Console)
+      // *************************************************************
+      
+      // Option 1: Standard US Central (Default)
+       databaseURL: "https://video-mockup-test69-default-rtdb.firebaseio.com",
+
+      // Option 2: Asia Southeast (Singapore) - Uncomment if above fails
+      // databaseURL: "https://video-mockup-test69-default-rtdb.asia-southeast1.firebasedatabase.app",
+      
       storageBucket: "video-mockup-test69.firebasestorage.app",
       messagingSenderId: "880333812758",
       appId: "1:880333812758:web:07bd9850b839fc0ad87137"
     };
     
+    // Initialize
     if (!firebase.apps.length) {
         try {
             firebase.initializeApp(firebaseConfig);
+            console.log("Firebase initialized");
         } catch (e) {
-            console.error("Firebase Init Error:", e);
+            console.error("Firebase Initialization Error:", e);
         }
     }
     
-    // Safety check for database
-    let database, countRef;
+    // Database Reference
+    let countRef;
     try {
-        database = firebase.database();
+        const database = firebase.database();
         countRef = database.ref('mockup_count/total');
     } catch (e) {
-        console.error("Database connection failed. Please create Realtime Database in Console.");
-        document.getElementById('mockupCountDisplay').innerText = "စနစ်ချိတ်ဆက်မှု မအောင်မြင်ပါ (Console တွင် Database ဖွင့်ပါ)";
+        console.error("Database Error:", e);
+        document.getElementById('mockupCountDisplay').innerText = "Database Config Error";
     }
     
     function listenForMockupCount() {
         if (!countRef) return;
+        
         countRef.on('value', (snapshot) => {
             const count = snapshot.val() || 0;
             document.getElementById('mockupCountDisplay').innerText = 
                 `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: ${count}`;
         }, (error) => {
-            console.error("Read Error:", error);
-            // Permission denied or DB not found
+            console.error("Permission/Network Error:", error);
+            // If rules deny access or URL is wrong
             document.getElementById('mockupCountDisplay').innerText = 
-                `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: (Connection Error - Check Rules)`;
+                `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: (Offline/Error)`;
         });
     }
 
@@ -278,6 +316,8 @@
             return (currentCount || 0) + 1; 
         });
     }
+    
+    // Start Listening
     listenForMockupCount();
 
 
@@ -300,6 +340,7 @@
     const procText = document.getElementById('procText');
     const themeIcon = document.querySelector('#theme-toggle iconify-icon');
 
+    // Theme Logic
     function toggleTheme() {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -322,6 +363,7 @@
 
     function openFacebook() { window.open(facebookUrl, '_blank'); }
 
+    // Video Upload
     videoLoader.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -351,8 +393,10 @@
         downloadBtn.innerHTML = '<iconify-icon icon="mdi:download" style="font-size: 1.3rem; vertical-align: sub; margin-right: 5px;"></iconify-icon> Download Video';
     }
 
+    // Download Logic
     async function downloadVideo() {
         if (!userVideo.src) return;
+
         incrementMockupCount();
 
         downloadBtn.disabled = true;
@@ -425,13 +469,23 @@
 
         function drawFrame() {
             if (mediaRecorder.state === "inactive") return;
+
+            // DYNAMIC BACKGROUND COLOR Logic
             const currentTheme = document.documentElement.getAttribute('data-theme');
-            ctx.fillStyle = currentTheme === 'dark' ? "#2c313a" : "#ffffff";
+            if (currentTheme === 'dark') {
+                ctx.fillStyle = "#2c313a"; 
+            } else {
+                ctx.fillStyle = "#ffffff"; 
+            }
+            
             ctx.fillRect(0, 0, w, h);
+
             ctx.drawImage(userVideo, 198 * SCALE_FACTOR, 198 * SCALE_FACTOR, 1444 * SCALE_FACTOR, 3204 * SCALE_FACTOR);
+
             if (frameImg.complete) {
                 ctx.drawImage(frameImg, 0, 0, w, h);
             }
+
             requestAnimationFrame(drawFrame);
         }
         drawFrame();
