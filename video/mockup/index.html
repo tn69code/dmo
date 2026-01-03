@@ -21,7 +21,12 @@
         --color-border:#dee2e6;
         --shadow-soft:0 4px 12px rgba(0,0,0,0.1);
         --shadow-preview:0 8px 24px rgba(0,0,0,0.2);
-        --color-mockup-bg: #ffffff; 
+        --color-mockup-bg: #ffffff;
+        
+        /* Notice Box Colors (Light) */
+        --notice-bg: #fff3cd;
+        --notice-text: #664d03;
+        --notice-border: #ffecb5;
     }
     :root[data-theme="dark"]{
         --color-primary:#58b368;
@@ -33,7 +38,12 @@
         --color-border:#444c5c;
         --shadow-soft:0 4px 12px rgba(0,0,0,0.4);
         --shadow-preview:0 8px 24px rgba(0,0,0,0.6);
-        --color-mockup-bg: #2c313a; 
+        --color-mockup-bg: #2c313a;
+
+        /* Notice Box Colors (Dark) */
+        --notice-bg: #413006;
+        --notice-text: #ffda6a;
+        --notice-border: #58430a;
     }
 
     body{margin:0;font-family:'Inter',sans-serif;background-color:var(--color-bg-main);color:var(--color-text);transition:background-color 0.4s,color 0.4s}
@@ -87,6 +97,26 @@
         font-weight: 500;
     }
     :root[data-theme="dark"] #mockupCountDisplay { color: #adb5bd; }
+
+    /* NOTICE BOX STYLE */
+    .notice-box {
+        background-color: var(--notice-bg);
+        color: var(--notice-text);
+        border: 1px solid var(--notice-border);
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-align: left;
+        line-height: 1.5;
+    }
+    .notice-box iconify-icon {
+        font-size: 1.8rem;
+        min-width: 30px;
+    }
 
     label.upload-label{
         width: 100%;
@@ -195,6 +225,13 @@
             စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: ...
         </p>
 
+        <div class="notice-box">
+            <iconify-icon icon="mdi:alert-circle-outline"></iconify-icon>
+            <span>
+                <strong>သတိပြုရန်:</strong> Video Mockup ပြုလုပ်ရန်အတွက် မိမိဖုန်း Screen Record ဖမ်းထားသော <strong>Video (MP4)</strong> ဖိုင်ကို အသုံးပြုပါ
+            </span>
+        </div>
+
         <label class="upload-label" for="videoLoader">
             <iconify-icon icon="mdi:cloud-upload-outline" style="font-size: 50px;"></iconify-icon>
             <span style="font-weight: 700;">Click to Upload Video</span>
@@ -227,34 +264,27 @@
 
 <script>
     // ======================================
-    // 1. COUNTER API FIX (Using no-cache and direct fetch)
+    // 1. COUNTER API FIX
     // ======================================
-    // Using the exact URL you provided to ensure mapping
     const BASE_URL = 'https://api.counterapi.dev/v1/dmo-video-mockup-69/total_downloads';
     
-    // Read Current Count
     function getCount() {
-        // Added cache: 'no-store' to prevent browser from showing cached 0
         fetch(BASE_URL + '/', { cache: "no-store" }) 
         .then(res => {
             if (!res.ok) throw new Error("API Limit or Network Error");
             return res.json();
         })
         .then(data => {
-            // Check if count exists, otherwise 0
             const count = (data && data.count) ? data.count : 0;
             document.getElementById('mockupCountDisplay').innerText = 
                 `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: ${count}`;
         })
         .catch(err => {
-            console.error("Counter Error:", err);
-            // Don't show 0 if error, show "..." so we know it's loading/failed
             document.getElementById('mockupCountDisplay').innerText = 
                 `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: (Offline)`;
         });
     }
 
-    // Increment Count
     function incrementCount() {
         fetch(BASE_URL + '/up', { cache: "no-store" })
         .then(res => res.json())
@@ -265,7 +295,6 @@
         .catch(err => console.error("Increment Error:", err));
     }
     
-    // Initial Load
     getCount();
 
 
@@ -438,4 +467,3 @@
 
 </body>
 </html>
-
