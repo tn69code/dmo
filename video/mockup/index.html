@@ -227,36 +227,42 @@
 
 <script>
     // ======================================
-    // 1. NEW COUNTER API SETUP (CounterAPI.dev)
+    // 1. COUNTER API FIX (Using no-cache and direct fetch)
     // ======================================
-    const COUNTER_NAMESPACE = 'dmo-video-mockup-69'; // Unique Name
-    const COUNTER_KEY = 'total_downloads';
+    // Using the exact URL you provided to ensure mapping
+    const BASE_URL = 'https://api.counterapi.dev/v1/dmo-video-mockup-69/total_downloads';
     
     // Read Current Count
     function getCount() {
-        fetch(`https://api.counterapi.dev/v1/${COUNTER_NAMESPACE}/${COUNTER_KEY}`)
-        .then(res => res.json())
+        // Added cache: 'no-store' to prevent browser from showing cached 0
+        fetch(BASE_URL + '/', { cache: "no-store" }) 
+        .then(res => {
+            if (!res.ok) throw new Error("API Limit or Network Error");
+            return res.json();
+        })
         .then(data => {
+            // Check if count exists, otherwise 0
+            const count = (data && data.count) ? data.count : 0;
             document.getElementById('mockupCountDisplay').innerText = 
-                `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: ${data.count || 0}`;
+                `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: ${count}`;
         })
         .catch(err => {
-            console.log("Creating new counter...");
-            // If fails, it might be new, assume 0
+            console.error("Counter Error:", err);
+            // Don't show 0 if error, show "..." so we know it's loading/failed
             document.getElementById('mockupCountDisplay').innerText = 
-                `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: 0`;
+                `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: (Offline)`;
         });
     }
 
     // Increment Count
     function incrementCount() {
-        fetch(`https://api.counterapi.dev/v1/${COUNTER_NAMESPACE}/${COUNTER_KEY}/up`)
+        fetch(BASE_URL + '/up', { cache: "no-store" })
         .then(res => res.json())
         .then(data => {
             document.getElementById('mockupCountDisplay').innerText = 
                 `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: ${data.count}`;
         })
-        .catch(err => console.error("Counter Error:", err));
+        .catch(err => console.error("Increment Error:", err));
     }
     
     // Initial Load
@@ -336,7 +342,7 @@
     async function downloadVideo() {
         if (!userVideo.src) return;
 
-        // Call the NEW API to increase count
+        // Call API
         incrementCount();
 
         downloadBtn.disabled = true;
