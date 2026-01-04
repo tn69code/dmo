@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
   <title>DMO - Image Mockup</title>
   <link rel="icon" href="./favicon.ico" type="image/x-icon">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
@@ -15,7 +15,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
 <style id="obfuscated-styles">
-/* Reset Button ကို အနီရောင် ပုံသေထားသော CSS */
+/* Reset CSS & Variables */
 :root[data-theme="light"]{--color-primary:#0D6EFD;--color-primary-light:#4c8fee;--color-text:#212529;--color-bg-light:#ffffff;--color-bg-main:#f8f9fa;--color-card-bg:#ffffff;--color-border:#dee2e6;--shadow-soft:0 4px 12px rgba(0,0,0,0.1);--shadow-preview:0 8px 24px rgba(0,0,0,0.2)}
 :root[data-theme="dark"]{--color-primary:#58b368;--color-primary-light:#6dc77f;--color-text:#e9ecef;--color-bg-light:#2c313a;--color-bg-main:#212529;--color-card-bg:#2c313a;--color-border:#444c5c;--shadow-soft:0 4px 12px rgba(0,0,0,0.4);--shadow-preview:0 8px 24px rgba(0,0,0,0.6)}
 
@@ -24,32 +24,25 @@ body{margin:0;font-family:'Inter',sans-serif;background-color:var(--color-bg-mai
 .header{display:flex;justify-content:space-between;align-items:center;padding:15px 25px;background-color:var(--color-card-bg);box-shadow:var(--shadow-soft);position:sticky;top:0;z-index:1000}
 .logo{font-size:1.6rem;font-weight:800;color:var(--color-primary);text-decoration:none;letter-spacing:-0.5px}
 
-/* --- Menu Button FIX (Video Mockup Style) --- */
+/* Action Icons (Header) */
 .action-icons{display:flex;gap:12px;align-items: center;}
 .icon-btn {
     background: transparent;
     border: 2px solid transparent;
     cursor: pointer;
     color: var(--color-text);
-    font-size: 1.4rem;
-    width: 45px; /* Fixed Width */
-    height: 45px; /* Fixed Height for Circle */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    transition: all 0.2s;
-    padding: 0;
+    width: 40px; height: 40px; /* အနည်းငယ် သေးလိုက်သည် */
+    display: flex; justify-content: center; align-items: center;
+    border-radius: 50%; transition: all 0.2s; padding: 0;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
-.icon-btn:hover {
-    background-color: var(--color-bg-main);
-    color: var(--color-primary);
-    transform: translateY(-2px);
+.icon-btn:hover { background-color: var(--color-bg-main); color: var(--color-primary); transform: translateY(-2px); }
+
+/* *** FIX 1: Header Icon Size Control *** */
+.icon-btn iconify-icon {
+    font-size: 1.4rem !important; /* Header icons တွေကို အနေတော် အရွယ် ပြန်ထားသည် */
 }
-/* Facebook Icon Specifics */
-#contact-admin-btn iconify-icon{ font-size:1.5rem; color:#1877F2; border: none; padding: 0; background: transparent; }
-#contact-admin-btn:hover iconify-icon{ color:var(--color-primary); }
+#contact-admin-btn iconify-icon{ color:#1877F2; }
 
 /* Main Card Style */
 .main-card{
@@ -58,125 +51,75 @@ body{margin:0;font-family:'Inter',sans-serif;background-color:var(--color-bg-mai
     border-radius: 20px;
     box-shadow: var(--shadow-soft);
     text-align: center;
-    position: relative; /* Reset Button ကို နေရာချဖို့ */
+    position: relative;
 }
 .main-card h3{margin-bottom:5px;font-weight:600}
 input{display:none}
 
-/* 1. Upload Section Design (ပိုမိုကြီးမား ဆွဲဆောင်မှုရှိ) */
+/* Upload Section */
 label{
-    width: 100%;
-    height: 220px; 
-    margin-top: 20px;
+    width: 100%; height: 220px; margin-top: 20px;
     border: 3px dashed var(--color-primary);
-    border-radius: 15px;
-    color: var(--color-primary);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    cursor: pointer;
-    background-color: transparent;
+    border-radius: 15px; color: var(--color-primary);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    gap: 15px; cursor: pointer; background-color: transparent;
     transition: all 0.3s ease-in-out;
 }
-label:hover{
-    /* Hover effect ကို ပိုလှအောင် ပြင်ခြင်း */
-    background-color: rgba(var(--color-primary-light), 0.05);
-    border-color: var(--color-primary-light);
-    transform: translateY(-2px);
+label:hover{ background-color: rgba(var(--color-primary-light), 0.05); transform: translateY(-2px); }
+
+/* *** Upload Area Icon Specific *** */
+label iconify-icon {
+    font-size: 48px !important; /* Upload နေရာက Icon ကိုတော့ ကြီးကြီးထားမည် */
 }
-iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြီးအောင် လုပ်ခြင်း */
+
 #span{font-weight:700; font-size: 1.1rem;}
 
-/* 2. Generated Image Preview Design */
+/* Generated Image Preview Design */
 #img_div{
-    margin-top: 25px;
-    background-color: var(--color-bg-main);
-    border-radius: 12px;
-    padding: 15px;
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-preview); /* ပိုမိုထင်ပေါ်အောင် shadow ထည့်ခြင်း */
+    margin-top: 20px;
+    background-color: transparent; 
+    border: none; 
+    box-shadow: none; 
+    padding: 0;
+    text-align: center;
 }
-#img_div img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:6px;box-shadow:var(--shadow-soft)}
+#img_div img{
+    max-width:100%; height:auto; display:inline-block;
+    border-radius: 20px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25); 
+}
 #imageCanvas{display:none}
 
-/* Action Bar (Download Button) */
-.action-bar-bottom{
-    display:flex;
-    justify-content:center;
-    margin-top:20px;
-}
+/* Buttons */
+.action-bar-bottom{ display:flex; justify-content:center; margin-top:20px; }
 .btn-primary{
-    /* Download Button ကို အပြည့်လုပ်ခြင်း */
-    width: 100%; 
-    background-color:var(--color-primary)!important;
-    border-color:var(--color-primary)!important;
-    color:var(--color-bg-light)!important;
-    font-weight:bold;
-    border-radius:8px;
-    padding:12px 25px; /* ပိုကြီးအောင် လုပ်ခြင်း */
-    transition:all 0.2s;
-    font-size: 1.1rem;
-    margin-top: 20px; /* Preview နဲ့ ခွာပေးခြင်း */
+    width: 100%; background-color:var(--color-primary)!important;
+    border-color:var(--color-primary)!important; color:var(--color-bg-light)!important;
+    font-weight:bold; border-radius:8px; padding:12px 25px;
+    transition:all 0.2s; font-size: 1.1rem; margin-top: 10px;
 }
 .btn-primary:hover{background-color:var(--color-primary-light)!important;transform:translateY(-1px)}
 
-/* Reset Button ကို ညာဘက်အပေါ်ထောင့်သို့ ရွှေ့ခြင်း */
+/* Reset Button */
 #resetBtn{
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background-color: #dc3545!important;
-    border: none;
-    color: white!important;
-    border-radius: 50%; /* လုံးဝန်းသောပုံစံ */
-    width: 35px;
-    height: 35px;
-    padding: 0;
-    font-size: 1rem;
-    line-height: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: var(--shadow-soft);
-    z-index: 10;
+    position: absolute; top: 15px; right: 15px;
+    background-color: #dc3545!important; border: none; color: white!important;
+    border-radius: 50%; width: 35px; height: 35px;
+    display: flex; justify-content: center; align-items: center;
+    cursor: pointer; box-shadow: var(--shadow-soft); z-index: 10;
 }
-#resetBtn:hover{
-    background-color: #c82333!important;
-    transform: scale(1.05);
-}
+#resetBtn:hover{ transform: scale(1.1); }
 
-/* Mobile Adjustments (3. Mobile/Responsive) */
+/* Responsive */
 @media (max-width: 600px) {
-    .header {
-        padding: 10px 15px; /* header padding လျှော့ချခြင်း */
-    }
-    .main-card {
-        padding: 20px 15px;
-    }
-    label {
-        height: 180px; /* Mobile မှာ အနည်းငယ် သေးငယ်အောင် လုပ်ခြင်း */
-        gap: 10px;
-    }
-    iconify-icon {
-        font-size: 40px;
-    }
-    .btn-primary {
-        padding: 10px 20px;
-        font-size: 1rem;
-    }
+    .header { padding: 10px 15px; }
+    .main-card { padding: 20px 15px; }
+    label { height: 180px; gap: 10px; }
 }
 
-/* ***** NEW FIX FOR DARK MODE COUNT DISPLAY ***** */
-:root[data-theme="dark"] #mockupCountDisplay {
-    color: #ced4da !important; /* light gray အရောင်ဖြင့် ပြသရန် */
-}
-:root[data-theme="light"] #mockupCountDisplay {
-    color: #6c757d !important; /* Light Mode မှာ ပုံမှန် မီးခိုးရောင် ပြသရန် */
-}
-/* ********************************************* */
+/* Dark Mode Text Fix */
+:root[data-theme="dark"] #mockupCountDisplay { color: #ced4da !important; }
+:root[data-theme="light"] #mockupCountDisplay { color: #6c757d !important; }
 </style>
 </head>
 <body>
@@ -184,10 +127,10 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
 <div class="header">
     <a href="#" class="logo">DMO</a>
     <div class="action-icons">
-        <button class="icon-btn" onclick="openFacebook()" id="contact-admin-btn" title="Contact via Facebook">
+        <button class="icon-btn" onclick="openFacebook()" id="contact-admin-btn">
             <iconify-icon icon="logos:facebook"></iconify-icon>
         </button>
-        <button class="icon-btn" onclick="toggleTheme()" id="theme-toggle" title="Toggle Light/Dark Mode">
+        <button class="icon-btn" onclick="toggleTheme()" id="theme-toggle">
             <iconify-icon icon="ic:round-light-mode"></iconify-icon>
         </button>
     </div>
@@ -200,17 +143,16 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
     <p>Select a screenshot to perfectly fit the device frame.</p>
     
     <p class="mb-0 text-muted" id="mockupCountDisplay">
-        စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: Loading...
+        Loading count...
     </p>
 
     <label for="imageLoader">
         <iconify-icon icon="mdi:cloud-upload-outline"></iconify-icon>
-        <span id="span">Click or Drag Image Here (PNG or JPG)</span>
+        <span id="span">Click or Drag Image Here</span>
         <input type="file" id="imageLoader" name="imageLoader" accept="image/*">
     </label>
 </div>
-
-
+<br>
 <div class="main-card preview-section" id="preview-card" style="display:none;">
     <h3>Generated Mockup</h3>
     <button class="btn-closs fa fa-times" id="resetBtn" onClick="resetBtn()"></button> 
@@ -219,18 +161,20 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
     
     <div id="img_div"></div>
     
-    <div id="project" class="action-bar-bottom"><p class="ex1">
+    <div id="project" class="action-bar-bottom" style="display:none;">
         <button class="btn btn-primary" id="download"><i class="fa fa-download"></i> Download Image</button>
-    </p></div>
+    </div>
 </div>
 
 </div> 
+
 <script type="text/javascript">
     
-    // ======================================
-    // 1. OBFUSCATED STRINGS & CONFIG
-    // ======================================
-    var _0x2c68=['\x68\x74\x74\x70\x73\x3A\x2F\x2F\x77\x77\x77\x2E\x66\x61\x63\x65\x62\x6F\x6F\x6B\x2E\x63\x6F\x6D\x2F\x73\x68\x61\x72\x65\x2F\x31\x42\x69\x76\x38\x61\x67\x64\x4D\x43\x2F','\x2E\x2E\x2F\x62\x65\x7A\x65\x6C\x6C\x65\x73\x73\x5F\x77\x67\x72\x61\x79\x2E\x70\x6E\x67'];
+        var _0x2c68 = [
+        '\x68\x74\x74\x70\x73\x3A\x2F\x2F\x77\x77\x77\x2E\x66\x61\x63\x65\x62\x6F\x6F\x6B\x2E\x63\x6F\x6D\x2F\x73\x68\x61\x72\x65\x2F\x31\x42\x69\x76\x38\x61\x67\x64\x4D\x43\x2F',
+        '\x68\x74\x74\x70\x73\x3A\x2F\x2F\x64\x6D\x6F\x2D\x6D\x6F\x63\x6B\x75\x70\x2D\x74\x6F\x6F\x6C\x73\x2E\x76\x65\x72\x63\x65\x6C\x2E\x61\x70\x70\x2F\x62\x65\x7A\x65\x6C\x6C\x65\x73\x73\x5F\x77\x67\x72\x61\x79\x2E\x70\x6E\x67'
+    ];
+
     
     const _0xfirebaseConfig = 'eyJhcGlLZXkiOiJBSXphU3lDOU5wcjltRHVCMl84ZUl0dk0tU1lrSjgxM2VsOXdOQlUiLCJhdXRoRG9tYWluIjoiZG1vNjktYjc2N2EuZmlyZWJhc2VhcHAuY29tIiwiZGF0YWJhc2VVUkwiOiJodHRwczovL2RtbzY5LWI3NjdhLWRlZmF1bHQtcnRkYi5hc2lhLXNvdXRoZWFzdDEuZmlyZWJhc2VkYXRhYmFzZS5hcHAiLCJwcm9qZWN0SWQiOiJkbW82OS1iNzY3YSIsInN0b3JhZ2VCdWNrZXQiOiJkbW82OS1iNzY3YS5maXJlYmFzZXN0b3JhZ2UuYXBwIiwibWVzc2FnaW5nU2VuZGVySWQiOiIyMzg0NDYwNDMxNDciLCJhcHBJZCI6IjE6MjM4NDQ2MDQzMTQ3OndlYjoxOGVkYzAyZTQzM2RhZjE5MDUyNzAiLCJtZWFzdXJlbWVudElkIjoiRy1TSllTVkpMRVNRIn0=';
 
@@ -247,9 +191,7 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
             document.getElementById('mockupCountDisplay').innerText = 
                 `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: ${count}`;
         }, (error) => {
-            console.error("Firebase Read Error:", error);
-            document.getElementById('mockupCountDisplay').innerText = 
-                `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: (Error Loading Count)`;
+            console.error("Firebase error:", error);
         });
     }
 
@@ -261,11 +203,9 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
     
     listenForMockupCount();
 
-
     // ======================================
-    // 2. THEME & LINK FUNCTIONS
+    // 2. THEME & UTILS
     // ======================================
-
     function toggleTheme() {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -288,16 +228,15 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
     updateThemeIcon(savedTheme);
 
     function openFacebook() {
-        const facebookUrl = _0x2c68[0]; 
-        window.open(facebookUrl, '_blank');
+        window.open(_0x2c68[0], '_blank');
     }
 
     // ======================================
-    // 3. OPTIMIZED MOCKUP LOGIC (CRITICAL FIX)
+    // 3. MOCKUP LOGIC
     // ======================================
-
-    // *** FIX 1: Preload Frame Immediately ***
+    
     var frameImg = new Image();
+    frameImg.crossOrigin = "Anonymous"; 
     frameImg.src = _0x2c68[1]; 
 
     var imageLoader = document.getElementById("imageLoader");
@@ -310,25 +249,20 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
         
         document.getElementById('preview-card').style.display = 'block'; 
         document.getElementById('img_div').innerHTML = ''; 
+        document.getElementById('project').style.display = 'none'; 
         
         var reader = new FileReader();
         reader.onload = function(event) {
             var img = new Image();
-            // Removed crossOrigin for user uploaded blob (not needed for local file)
             img.src = event.target.result;
             
-            // *** FIX 2: Use img.decode() to prevent WHITE SCREEN ***
-            // This ensures the image is fully processed by the browser before drawing
             img.decode()
             .then(() => {
                 renderMockup(img);
             })
             .catch((err) => {
-                // Fallback if decode fails
-                console.warn("Decode failed, using onload", err);
-                img.onload = function() {
-                    renderMockup(img);
-                };
+                console.warn("Decode failed, falling back to onload", err);
+                img.onload = function() { renderMockup(img); };
             });
         };
         reader.readAsDataURL(e.target.files[0]);
@@ -339,37 +273,44 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
         canvas.height = 3600;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
-        // *** FIX 3: Fill Black to prevent White Gaps ***
         ctx.fillStyle = "#000000";
         ctx.fillRect(200, 200, 1440, 3200);
 
-        // Draw uploaded image with BLEED (Slightly larger than frame hole)
         ctx.drawImage(userImg, 198, 198, 1444, 3204);
 
-        // Draw device frame on top
         if (frameImg.complete && frameImg.naturalWidth > 0) {
             drawFrameAndFinish();
         } else {
-            frameImg.onload = function() {
-                drawFrameAndFinish();
+            frameImg.onload = function() { drawFrameAndFinish(); };
+            frameImg.onerror = function() {
+                alert("Frame image failed to load. Check internet or link.");
             };
         }
     }
 
     function drawFrameAndFinish() {
-        ctx.drawImage(frameImg, 0, 0, 1840, 3600);
-        
-        var base64 = canvas.toDataURL("image/png");
-        var fileToSave = new Image();
-        fileToSave.onload = function() {
-            document.getElementById("img_div").appendChild(this);
-            incrementMockupCount(); 
-            var_dl('project');
-        };
-        fileToSave.src = base64;
+        try {
+            ctx.drawImage(frameImg, 0, 0, 1840, 3600);
+            
+            var base64 = canvas.toDataURL("image/png");
+            var fileToSave = new Image();
+            fileToSave.onload = function() {
+                document.getElementById("img_div").appendChild(this);
+                // *** Count removed from here ***
+                document.getElementById('project').style.display = 'block';
+            };
+            fileToSave.src = base64;
+        } catch (e) {
+            console.error("CORS/Canvas Error:", e);
+            alert("Error generating image. Try again.");
+        }
     }
 
+    // *** FIX 2: Increment Count ON DOWNLOAD only ***
     document.getElementById('download').onclick = function() {
+        
+        incrementMockupCount(); // Download နှိပ်မှ Count တက်မည်
+
         let canvasUrl = canvas.toDataURL("image/png");
         const createEl = document.createElement('a');
         createEl.href = canvasUrl;
@@ -377,24 +318,14 @@ iconify-icon{font-size:48px} /* Icon ကို အနည်းငယ် ကြ�
         createEl.click();
         createEl.remove();
     };
-
-    // ======================================
-    // 4. UTILITY FUNCTIONS
-    // ======================================
-    function var_dl(id) {
-        document.getElementById(id).style.display='flex';
-    }
     
     function resetBtn() {
         document.getElementById('preview-card').style.display = 'none'; 
         document.getElementById('img_div').innerHTML = ''; 
         document.getElementById("imageLoader").value = null; 
-        
-        alert("Mockup Tool ကို ပြန်လည်အသုံးပြုရန် အဆင်သင့်ဖြစ်ပါပြီ");
+        alert("Ready for new image!");
     }
-
 </script>
     
 </body>
 </html>
-
