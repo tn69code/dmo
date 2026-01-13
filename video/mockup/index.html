@@ -191,6 +191,12 @@
     .btn-primary:active { transform: scale(0.98); }
     .btn-outline-primary, .btn-danger { border-radius: 12px; }
 
+    /* Custom Switch Style */
+    .form-check-input:checked {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+    }
+
     #recordingCanvas { display: none; }
     .processing-text {
         color: var(--color-primary);
@@ -247,11 +253,23 @@
         </div>
 
         <div class="controls">
+            <div class="form-check form-switch w-100 d-flex justify-content-center gap-2 align-items-center">
+                <input class="form-check-input" type="checkbox" id="limitDuration" checked style="cursor: pointer; width: 45px; height: 22px;">
+                <label class="form-check-label" for="limitDuration" style="cursor: pointer; user-select: none;">
+                    15 Sec Only (Fast)
+                </label>
+            </div>
+            <small style="color: var(--color-text); opacity: 0.7; font-size: 0.8rem;">
+                (အမှန်ခြစ်ဖြုတ်လျှင် Video အပြည့်ရပါမည်)
+            </small>
+
             <p class="processing-text" id="procText">Creating Video (Processing)...<br>ကျေးဇူးပြု၍ ခဏစောင့်ပါ။</p>
+            
             <button class="btn btn-primary" id="downloadBtn" onclick="downloadVideo()">
                 <iconify-icon icon="mdi:download" style="font-size: 1.3rem; vertical-align: sub; margin-right: 5px;"></iconify-icon> 
                 Download Video
             </button>
+            
             <div class="btn-group-action">
                 <button class="btn btn-outline-primary" style="flex:1;" onclick="togglePlay()">Play/Pause</button>
                 <button class="btn btn-danger" onclick="resetApp()">Reset</button>
@@ -264,7 +282,7 @@
 
 <script>
     // ======================================
-    // 1. COUNTER API FIX
+    // 1. COUNTER API
     // ======================================
     const BASE_URL = 'https://api.counterapi.dev/v1/dmo-video-mockup-69/total_downloads';
     
@@ -303,7 +321,9 @@
     // ======================================
     const facebookUrl = 'https://www.facebook.com/share/1Biv8agdMC/';
     const frameSrc = "https://raw.githubusercontent.com/tn69code/dmo/refs/heads/main/bezelless_wgray.png";
-    const SCALE_FACTOR = 0.5; 
+    
+    // Performance Tuning: 0.4 for speed, 24 FPS
+    const SCALE_FACTOR = 0.4; 
 
     const frameImg = new Image();
     frameImg.crossOrigin = "anonymous";
@@ -368,10 +388,12 @@
         downloadBtn.innerHTML = '<iconify-icon icon="mdi:download" style="font-size: 1.3rem; vertical-align: sub; margin-right: 5px;"></iconify-icon> Download Video';
     }
 
+    // ======================================
+    // MODIFIED DOWNLOAD FUNCTION
+    // ======================================
     async function downloadVideo() {
         if (!userVideo.src) return;
 
-        // Call API
         incrementCount();
 
         downloadBtn.disabled = true;
@@ -386,6 +408,10 @@
         canvas.width = w;
         canvas.height = h;
 
+        // Check for Duration Limit
+        const isShortMode = document.getElementById('limitDuration').checked;
+        const maxDurationSec = 15; // 15 Seconds Limit
+
         let mimeType = 'video/webm;codecs=vp9'; 
         let fileExt = 'webm';
         if (MediaRecorder.isTypeSupported('video/mp4')) {
@@ -395,7 +421,9 @@
              mimeType = 'video/webm;codecs=h264';
         }
 
-        const stream = canvas.captureStream(30); 
+        // Reduced FPS to 24 for better performance on long videos
+        const stream = canvas.captureStream(24); 
+
         try {
             const audioStream = userVideo.captureStream ? userVideo.captureStream() : userVideo.mozCaptureStream ? userVideo.mozCaptureStream() : null;
             if (audioStream && audioStream.getAudioTracks().length > 0) {
@@ -403,31 +431,38 @@
             }
         } catch(e) { console.warn("Audio capture warning:", e); }
 
-        const mediaRecorder = new MediaRecorder(stream, { mimeType: mimeType, videoBitsPerSecond: 2500000 });
+        const mediaRecorder = new MediaRecorder(stream, { 
+            mimeType: mimeType, 
+            videoBitsPerSecond: 2500000 
+        });
         const chunks = [];
 
         mediaRecorder.ondataavailable = (e) => {
             if (e.data.size > 0) chunks.push(e.data);
         };
 
+        // Function to Handle Saving
         mediaRecorder.onstop = () => {
             const blob = new Blob(chunks, { type: mimeType });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `dmo-mockup.${fileExt}`;
+            a.download = `dmo-mockup-${Date.now()}.${fileExt}`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
+            // Reset UI
             downloadBtn.disabled = false;
             downloadBtn.innerHTML = '<iconify-icon icon="mdi:download" style="font-size: 1.3rem; vertical-align: sub; margin-right: 5px;"></iconify-icon> Download Video';
             procText.style.display = "none";
+            
             userVideo.loop = true;
             userVideo.play();
         };
 
+        // Start Recording Process
         userVideo.pause();
         userVideo.currentTime = 0;
         userVideo.loop = false; 
@@ -442,16 +477,22 @@
             return;
         }
 
+        let stopCheckInterval;
+
         function drawFrame() {
-            if (mediaRecorder.state === "inactive") return;
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                ctx.fillStyle = "#2c313a";
-            } else {
-                ctx.fillStyle = "#ffffff";
+            if (mediaRecorder.state === "inactive") {
+                if(stopCheckInterval) clearInterval(stopCheckInterval);
+                return;
             }
+
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            ctx.fillStyle = (currentTheme === 'dark') ? "#2c313a" : "#ffffff";
             ctx.fillRect(0, 0, w, h);
+            
+            // Draw Video
             ctx.drawImage(userVideo, 198 * SCALE_FACTOR, 198 * SCALE_FACTOR, 1444 * SCALE_FACTOR, 3204 * SCALE_FACTOR);
+            
+            // Draw Frame
             if (frameImg.complete) {
                 ctx.drawImage(frameImg, 0, 0, w, h);
             }
@@ -459,8 +500,25 @@
         }
         drawFrame();
 
+        // LOGIC: Stop automatically if Short Mode is ON
+        if(isShortMode) {
+            stopCheckInterval = setInterval(() => {
+                if(userVideo.currentTime >= maxDurationSec) {
+                    if(mediaRecorder.state !== "inactive") {
+                        userVideo.pause();
+                        mediaRecorder.stop();
+                    }
+                    clearInterval(stopCheckInterval);
+                }
+            }, 100); 
+        }
+
+        // LOGIC: Stop automatically when video ends (Full Mode)
         userVideo.onended = () => {
-            mediaRecorder.stop();
+            if(mediaRecorder.state !== "inactive") {
+                mediaRecorder.stop();
+                if(stopCheckInterval) clearInterval(stopCheckInterval);
+            }
         };
     }
 </script>
