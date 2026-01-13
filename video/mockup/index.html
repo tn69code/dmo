@@ -138,7 +138,9 @@
         background-color: rgba(var(--color-primary-light), 0.1);
         transform: translateY(-2px);
     }
-    input{display:none}
+    
+    /* FIX: Only hide file input, show checkboxes */
+    #videoLoader { display:none; }
     
     .mockup-wrapper {
         position: relative;
@@ -149,7 +151,7 @@
         box-shadow: var(--shadow-preview);
         border-radius: 40px; 
         overflow: hidden; 
-        background-color: var(--color-mockup-bg); 
+        background-color: transparent; /* Changed for preview */
         transition: background-color 0.4s;
     }
 
@@ -192,6 +194,12 @@
     .btn-outline-primary, .btn-danger { border-radius: 12px; }
 
     /* Custom Switch Style */
+    .form-check-input {
+        cursor: pointer; 
+        width: 40px; 
+        height: 20px;
+        display: inline-block; /* Ensure visibility */
+    }
     .form-check-input:checked {
         background-color: var(--color-primary);
         border-color: var(--color-primary);
@@ -254,7 +262,7 @@
 
         <div class="controls">
             <div class="form-check form-switch w-100 d-flex justify-content-center gap-2 align-items-center">
-                <input class="form-check-input" type="checkbox" id="limitDuration" checked style="cursor: pointer; width: 45px; height: 22px;">
+                <input class="form-check-input" type="checkbox" id="limitDuration" checked>
                 <label class="form-check-label" for="limitDuration" style="cursor: pointer; user-select: none;">
                     15 Sec Only (Fast)
                 </label>
@@ -322,7 +330,6 @@
     const facebookUrl = 'https://www.facebook.com/share/1Biv8agdMC/';
     const frameSrc = "https://raw.githubusercontent.com/tn69code/dmo/refs/heads/main/bezelless_wgray.png";
     
-    // Performance Tuning: 0.4 for speed, 24 FPS
     const SCALE_FACTOR = 0.4; 
 
     const frameImg = new Image();
@@ -388,9 +395,6 @@
         downloadBtn.innerHTML = '<iconify-icon icon="mdi:download" style="font-size: 1.3rem; vertical-align: sub; margin-right: 5px;"></iconify-icon> Download Video';
     }
 
-    // ======================================
-    // MODIFIED DOWNLOAD FUNCTION
-    // ======================================
     async function downloadVideo() {
         if (!userVideo.src) return;
 
@@ -408,20 +412,25 @@
         canvas.width = w;
         canvas.height = h;
 
-        // Check for Duration Limit
         const isShortMode = document.getElementById('limitDuration').checked;
-        const maxDurationSec = 15; // 15 Seconds Limit
+        const maxDurationSec = 15; 
 
         let mimeType = 'video/webm;codecs=vp9'; 
         let fileExt = 'webm';
         if (MediaRecorder.isTypeSupported('video/mp4')) {
+            // NOTE: MP4 does NOT support transparency normally, but kept for compatibility
             mimeType = 'video/mp4';
             fileExt = 'mp4';
         } else if (MediaRecorder.isTypeSupported('video/webm;codecs=h264')) {
              mimeType = 'video/webm;codecs=h264';
         }
+        
+        // Prioritize WebM for transparency if possible
+        if(MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
+             mimeType = 'video/webm;codecs=vp9';
+             fileExt = 'webm';
+        }
 
-        // Reduced FPS to 24 for better performance on long videos
         const stream = canvas.captureStream(24); 
 
         try {
@@ -441,7 +450,6 @@
             if (e.data.size > 0) chunks.push(e.data);
         };
 
-        // Function to Handle Saving
         mediaRecorder.onstop = () => {
             const blob = new Blob(chunks, { type: mimeType });
             const url = URL.createObjectURL(blob);
@@ -453,7 +461,6 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
-            // Reset UI
             downloadBtn.disabled = false;
             downloadBtn.innerHTML = '<iconify-icon icon="mdi:download" style="font-size: 1.3rem; vertical-align: sub; margin-right: 5px;"></iconify-icon> Download Video';
             procText.style.display = "none";
@@ -462,7 +469,6 @@
             userVideo.play();
         };
 
-        // Start Recording Process
         userVideo.pause();
         userVideo.currentTime = 0;
         userVideo.loop = false; 
@@ -485,9 +491,9 @@
                 return;
             }
 
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            ctx.fillStyle = (currentTheme === 'dark') ? "#2c313a" : "#ffffff";
-            ctx.fillRect(0, 0, w, h);
+            // --- TRANSPARENCY FIX ---
+            // Clear the canvas instead of filling it with white/dark
+            ctx.clearRect(0, 0, w, h);
             
             // Draw Video
             ctx.drawImage(userVideo, 198 * SCALE_FACTOR, 198 * SCALE_FACTOR, 1444 * SCALE_FACTOR, 3204 * SCALE_FACTOR);
@@ -500,7 +506,6 @@
         }
         drawFrame();
 
-        // LOGIC: Stop automatically if Short Mode is ON
         if(isShortMode) {
             stopCheckInterval = setInterval(() => {
                 if(userVideo.currentTime >= maxDurationSec) {
@@ -513,7 +518,6 @@
             }, 100); 
         }
 
-        // LOGIC: Stop automatically when video ends (Full Mode)
         userVideo.onended = () => {
             if(mediaRecorder.state !== "inactive") {
                 mediaRecorder.stop();
