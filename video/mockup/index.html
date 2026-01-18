@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-  <title>DMO - Video Mockup (Green Screen)</title>
+  <title>DMO - Fast Video Mockup</title>
   <link rel="icon" href="./favicon.ico" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
@@ -21,9 +21,8 @@
         --color-border:#dee2e6;
         --shadow-soft:0 4px 12px rgba(0,0,0,0.1);
         --shadow-preview:0 8px 24px rgba(0,0,0,0.2);
-        --color-mockup-bg: transparent; /* Preview background transparent */
+        --color-mockup-bg: transparent; 
         
-        /* Notice Box Colors (Light) */
         --notice-bg: #fff3cd;
         --notice-text: #664d03;
         --notice-border: #ffecb5;
@@ -40,7 +39,6 @@
         --shadow-preview:0 8px 24px rgba(0,0,0,0.6);
         --color-mockup-bg: transparent;
 
-        /* Notice Box Colors (Dark) */
         --notice-bg: #413006;
         --notice-text: #ffda6a;
         --notice-border: #58430a;
@@ -60,22 +58,12 @@
         cursor: pointer;
         color: var(--color-text);
         font-size: 1.4rem;
-        width: 42px; 
-        height: 42px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        transition: all 0.2s;
-        padding: 0;
+        width: 42px; height: 42px;
+        display: flex; justify-content: center; align-items: center;
+        border-radius: 50%; transition: all 0.2s; padding: 0;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
-    .icon-btn:hover {
-        background-color: var(--color-bg-main);
-        color: var(--color-primary);
-        transform: translateY(-2px);
-    }
-    
+    .icon-btn:hover { background-color: var(--color-bg-main); color: var(--color-primary); transform: translateY(-2px); }
     #contact-admin-btn iconify-icon{ color:#1877F2; }
     
     /* --- Main Layout --- */
@@ -90,152 +78,82 @@
     }
     .main-card h3{margin-bottom:5px;font-weight:700;}
 
-    #mockupCountDisplay {
-        font-size: 0.9rem;
-        color: #6c757d;
-        margin-bottom: 20px;
-        font-weight: 500;
-    }
+    #mockupCountDisplay { font-size: 0.9rem; color: #6c757d; margin-bottom: 20px; font-weight: 500; }
     :root[data-theme="dark"] #mockupCountDisplay { color: #adb5bd; }
 
-    /* NOTICE BOX STYLE */
     .notice-box {
-        background-color: var(--notice-bg);
-        color: var(--notice-text);
-        border: 1px solid var(--notice-border);
-        padding: 15px;
-        border-radius: 12px;
-        margin-bottom: 20px;
-        font-size: 0.95rem;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        text-align: left;
-        line-height: 1.5;
+        background-color: var(--notice-bg); color: var(--notice-text);
+        border: 1px solid var(--notice-border); padding: 15px;
+        border-radius: 12px; margin-bottom: 20px; font-size: 0.95rem;
+        display: flex; align-items: center; gap: 12px; text-align: left; line-height: 1.5;
     }
-    .notice-box iconify-icon {
-        font-size: 1.8rem;
-        min-width: 30px;
-    }
+    .notice-box iconify-icon { font-size: 1.8rem; min-width: 30px; }
 
     label.upload-label{
-        width: 100%;
-        height: 220px; 
-        margin-top: 10px;
-        border: 3px dashed var(--color-primary);
-        border-radius: 15px;
-        color: var(--color-primary);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-        cursor: pointer;
-        background-color: rgba(var(--color-primary-light), 0.02);
-        transition: all 0.3s ease-in-out;
+        width: 100%; height: 220px; margin-top: 10px;
+        border: 3px dashed var(--color-primary); border-radius: 15px;
+        color: var(--color-primary); display: flex; flex-direction: column;
+        justify-content: center; align-items: center; gap: 15px; cursor: pointer;
+        background-color: rgba(var(--color-primary-light), 0.02); transition: all 0.3s ease-in-out;
     }
-    label.upload-label:hover{
-        background-color: rgba(var(--color-primary-light), 0.1);
-        transform: translateY(-2px);
-    }
+    label.upload-label:hover{ background-color: rgba(var(--color-primary-light), 0.1); transform: translateY(-2px); }
     
     #videoLoader { display:none; }
     
-    /* Changed background-color to use CSS variable for preview only */
     .mockup-wrapper {
-        position: relative;
-        width: 280px; 
-        margin: 0 auto;
-        margin-top: 25px;
-        aspect-ratio: 1840 / 3600; 
-        box-shadow: var(--shadow-preview);
-        border-radius: 40px; 
-        overflow: hidden; 
+        position: relative; width: 280px; margin: 0 auto; margin-top: 25px;
+        aspect-ratio: 1840 / 3600; box-shadow: var(--shadow-preview);
+        border-radius: 40px; overflow: hidden; 
         background-color: var(--color-mockup-bg); 
         transition: background-color 0.4s;
     }
 
     #userVideo {
-        position: absolute;
-        top: 5.5%; 
-        left: 10.76%;
-        width: 78.48%;
-        height: 89%;
-        object-fit: cover;
-        z-index: 1;
-        background-color: #000; 
+        position: absolute; top: 5.5%; left: 10.76%; width: 78.48%; height: 89%;
+        object-fit: cover; z-index: 1; background-color: #000; 
     }
-
     #phoneFrame {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 2;
-        pointer-events: none;
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        z-index: 2; pointer-events: none;
     }
 
     .controls { margin-top: 25px; display: flex; flex-direction: column; gap: 15px; align-items: center;}
     .btn-group-action { display: flex; gap: 10px; width: 100%; justify-content: center; }
     
     .btn-primary{
-        background-color:var(--color-primary)!important;
-        border:none!important;
-        color:var(--color-bg-light)!important;
-        font-weight:bold;
-        border-radius:12px;
-        padding:14px 20px;
-        width: 100%;
-        font-size: 1rem;
+        background-color:var(--color-primary)!important; border:none!important;
+        color:var(--color-bg-light)!important; font-weight:bold;
+        border-radius:12px; padding:14px 20px; width: 100%; font-size: 1rem;
         box-shadow: 0 4px 6px rgba(var(--color-primary), 0.3);
     }
     .btn-primary:active { transform: scale(0.98); }
     .btn-outline-primary, .btn-danger { border-radius: 12px; }
 
-    /* Custom Switch Style */
-    .form-check-input {
-        cursor: pointer; 
-        width: 40px; 
-        height: 20px;
-        display: inline-block; 
-    }
-    .form-check-input:checked {
-        background-color: var(--color-primary);
-        border-color: var(--color-primary);
-    }
-    
-    /* Background Color Selector Styles */
+    /* Custom Switch & Radio */
+    .form-check-input { cursor: pointer; }
     .bg-selector-group {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-        background-color: rgba(0,0,0,0.05);
-        padding: 10px;
-        border-radius: 12px;
-        width: 100%;
+        display: flex; gap: 15px; justify-content: center;
+        background-color: rgba(0,0,0,0.05); padding: 10px; border-radius: 12px; width: 100%;
     }
-    .color-option {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
+    .color-option { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .color-swatch { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--color-border); }
+
+    /* Speed Selector */
+    .speed-selector {
+        width: 100%; display: flex; justify-content: space-between; gap: 10px;
     }
-    .color-swatch {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        border: 2px solid var(--color-border);
+    .speed-btn {
+        flex: 1; border: 1px solid var(--color-border); background: var(--color-card-bg);
+        color: var(--color-text); padding: 8px; border-radius: 10px; font-size: 0.9rem;
+    }
+    .speed-btn.active {
+        background-color: var(--color-primary); color: white; border-color: var(--color-primary);
     }
 
     #recordingCanvas { display: none; }
     .processing-text {
-        color: var(--color-primary);
-        font-weight: 600;
-        display: none;
-        margin-top: 10px;
-        font-size: 0.9rem;
-        animation: pulse 1.5s infinite;
+        color: var(--color-primary); font-weight: 600; display: none;
+        margin-top: 10px; font-size: 0.9rem; animation: pulse 1.5s infinite;
     }
     @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
   </style>
@@ -245,30 +163,19 @@
 <div class="header">
     <a href="#" class="logo">DMO</a>
     <div class="action-icons">
-        <button class="icon-btn" onclick="openFacebook()" id="contact-admin-btn" title="Contact via Facebook">
-            <iconify-icon icon="logos:facebook"></iconify-icon>
-        </button>
-        <button class="icon-btn" onclick="toggleTheme()" id="theme-toggle" title="Toggle Light/Dark Mode">
-            <iconify-icon icon="ic:round-light-mode"></iconify-icon>
-        </button>
+        <button class="icon-btn" onclick="openFacebook()" id="contact-admin-btn"><iconify-icon icon="logos:facebook"></iconify-icon></button>
+        <button class="icon-btn" onclick="toggleTheme()" id="theme-toggle"><iconify-icon icon="ic:round-light-mode"></iconify-icon></button>
     </div>
 </div>
 
 <div class="div__tak">
     <div class="main-card" id="uploadSection">
         <h3>Video Mockup Tool</h3>
-        
-        <p id="mockupCountDisplay">
-            စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: ...
-        </p>
-
+        <p id="mockupCountDisplay">စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: ...</p>
         <div class="notice-box">
             <iconify-icon icon="mdi:alert-circle-outline"></iconify-icon>
-            <span>
-                <strong>သတိပြုရန်:</strong> Video Mockup ပြုလုပ်ရန်အတွက် မိမိဖုန်း Screen Record ဖမ်းထားသော <strong>Video (MP4)</strong> ဖိုင်ကို အသုံးပြုပါ
-            </span>
+            <span>Video Mockup ပြုလုပ်ရန် Screen Record ဖမ်းထားသော <strong>Video (MP4)</strong> ဖိုင်ကို အသုံးပြုပါ</span>
         </div>
-
         <label class="upload-label" for="videoLoader">
             <iconify-icon icon="mdi:cloud-upload-outline" style="font-size: 50px;"></iconify-icon>
             <span style="font-weight: 700;">Click to Upload Video</span>
@@ -280,37 +187,42 @@
         <h3>Generated Video</h3>
         <div class="mockup-wrapper">
             <video id="userVideo" loop playsinline muted></video>
-            <img id="phoneFrame" src="https://raw.githubusercontent.com/tn69code/dmo/refs/heads/main/bezelless_wgray.png" alt="Phone Frame">
+            <img id="phoneFrame" src="https://raw.githubusercontent.com/tn69code/dmo/refs/heads/main/bezelless_wgray.png">
         </div>
 
         <div class="controls">
             <div style="width: 100%; text-align: left;">
-                <label style="font-weight: 600; margin-bottom: 8px; display: block;">Background Color (for Editing):</label>
+                <label style="font-weight: 600; margin-bottom: 8px; display: block;">Background Color:</label>
                 <div class="bg-selector-group">
                     <label class="color-option">
-                        <input type="radio" name="bgColor" value="#00ff00" checked class="form-check-input" style="width: 20px; height: 20px;"> 
-                        <div class="color-swatch" style="background-color: #00ff00;"></div>
-                        Green Screen
+                        <input type="radio" name="bgColor" value="#00ff00" checked class="form-check-input"> 
+                        <div class="color-swatch" style="background-color: #00ff00;"></div> Green
                     </label>
                     <label class="color-option">
-                        <input type="radio" name="bgColor" value="#0000ff" class="form-check-input" style="width: 20px; height: 20px;">
-                        <div class="color-swatch" style="background-color: #0000ff;"></div>
-                        Blue Screen
+                        <input type="radio" name="bgColor" value="#0000ff" class="form-check-input">
+                        <div class="color-swatch" style="background-color: #0000ff;"></div> Blue
                     </label>
                 </div>
-                <small style="color: var(--color-text); opacity: 0.8; font-size: 0.8rem; display: block; margin-top: 5px;">
-                    (Video Editor တွင် <b>Chroma Key</b> သုံး၍ နောက်ခံဖျောက်ပါ)
+            </div>
+
+            <div style="width: 100%; text-align: left;">
+                <label style="font-weight: 600; margin-bottom: 8px; display: block;">Processing Speed:</label>
+                <div class="speed-selector">
+                    <button class="speed-btn active" onclick="setSpeed(1, this)">1x (Normal)</button>
+                    <button class="speed-btn" onclick="setSpeed(2, this)">2x (Fast)</button>
+                    <button class="speed-btn" onclick="setSpeed(3, this)">3x (Super)</button>
+                </div>
+                <small style="color: var(--color-primary); display: block; margin-top: 5px; font-size: 0.85rem;">
+                    * 2x/3x နဲ့ထုတ်လျှင် Video Editor တွင် Speed ပြန်လျှော့ပါ
                 </small>
             </div>
 
             <div class="form-check form-switch w-100 d-flex justify-content-between align-items-center border p-2 rounded">
-                 <label class="form-check-label" for="limitDuration" style="cursor: pointer; user-select: none; font-weight: 500;">
-                    15 Sec Only (Fast Mode)
-                </label>
-                <input class="form-check-input m-0" type="checkbox" id="limitDuration" checked>
+                 <label class="form-check-label" for="limitDuration" style="font-weight: 500;">Limit 15s (Intro Only)</label>
+                <input class="form-check-input m-0" type="checkbox" id="limitDuration">
             </div>
 
-            <p class="processing-text" id="procText">Creating Video (Processing)...<br>ကျေးဇူးပြု၍ ခဏစောင့်ပါ။</p>
+            <p class="processing-text" id="procText">Processing... (Do not close)</p>
             
             <button class="btn btn-primary" id="downloadBtn" onclick="downloadVideo()">
                 <iconify-icon icon="mdi:download" style="font-size: 1.3rem; vertical-align: sub; margin-right: 5px;"></iconify-icon> 
@@ -328,48 +240,20 @@
 <canvas id="recordingCanvas"></canvas>
 
 <script>
-    // ======================================
-    // 1. COUNTER API
-    // ======================================
+    // COUNTER API
     const BASE_URL = 'https://api.counterapi.dev/v1/dmo-video-mockup-69/total_downloads';
-    
     function getCount() {
-        fetch(BASE_URL + '/', { cache: "no-store" }) 
-        .then(res => {
-            if (!res.ok) throw new Error("API Limit or Network Error");
-            return res.json();
-        })
-        .then(data => {
-            const count = (data && data.count) ? data.count : 0;
-            document.getElementById('mockupCountDisplay').innerText = 
-                `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: ${count}`;
-        })
-        .catch(err => {
-            document.getElementById('mockupCountDisplay').innerText = 
-                `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: (Offline)`;
-        });
+        fetch(BASE_URL + '/', { cache: "no-store" }).then(res=>res.ok?res.json():{count:0})
+        .then(data => document.getElementById('mockupCountDisplay').innerText = `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: ${data.count || 0}`)
+        .catch(e => document.getElementById('mockupCountDisplay').innerText = `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: (Offline)`);
     }
-
-    function incrementCount() {
-        fetch(BASE_URL + '/up', { cache: "no-store" })
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById('mockupCountDisplay').innerText = 
-                `စုစုပေါင်း Mockup ပြုလုပ်ပြီးသူ: ${data.count}`;
-        })
-        .catch(err => console.error("Increment Error:", err));
-    }
-    
+    function incrementCount() { fetch(BASE_URL + '/up', { cache: "no-store" }); }
     getCount();
 
-
-    // ======================================
-    // 2. APP LOGIC
-    // ======================================
-    const facebookUrl = 'https://www.facebook.com/share/1Biv8agdMC/';
+    // APP LOGIC
     const frameSrc = "https://raw.githubusercontent.com/tn69code/dmo/refs/heads/main/bezelless_wgray.png";
-    
     const SCALE_FACTOR = 0.4; 
+    let currentSpeed = 1.0;
 
     const frameImg = new Image();
     frameImg.crossOrigin = "anonymous";
@@ -384,59 +268,46 @@
     const themeIcon = document.querySelector('#theme-toggle iconify-icon');
 
     function toggleTheme() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon(newTheme);
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        updateThemeIcon(next);
     }
+    function updateThemeIcon(t) { themeIcon.setAttribute('icon', t==='dark'?'ic:round-dark-mode':'ic:round-light-mode'); }
+    document.documentElement.setAttribute('data-theme', localStorage.getItem('theme')||'light');
+    updateThemeIcon(localStorage.getItem('theme')||'light');
+    function openFacebook() { window.open('https://www.facebook.com/share/1Biv8agdMC/', '_blank'); }
 
-    function updateThemeIcon(theme) {
-        if (theme === 'dark') {
-            themeIcon.setAttribute('icon', 'ic:round-dark-mode');
-        } else {
-            themeIcon.setAttribute('icon', 'ic:round-light-mode');
-        }
-    }
-    
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    updateThemeIcon(savedTheme);
-
-    function openFacebook() { window.open(facebookUrl, '_blank'); }
-
+    // Video Loading
     videoLoader.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
-
-        const videoUrl = URL.createObjectURL(file);
-        userVideo.src = videoUrl;
+        userVideo.src = URL.createObjectURL(file);
         userVideo.crossOrigin = "anonymous"; 
-        
         uploadSection.style.display = 'none';
         previewSection.style.display = 'block';
         userVideo.play();
     });
 
-    function togglePlay() {
-        if (userVideo.paused) userVideo.play();
-        else userVideo.pause();
-    }
+    function togglePlay() { userVideo.paused ? userVideo.play() : userVideo.pause(); }
 
     function resetApp() {
-        userVideo.pause();
-        userVideo.src = "";
-        videoLoader.value = "";
-        previewSection.style.display = 'none';
-        uploadSection.style.display = 'block';
-        procText.style.display = 'none';
-        downloadBtn.disabled = false;
-        downloadBtn.innerHTML = '<iconify-icon icon="mdi:download" style="font-size: 1.3rem; vertical-align: sub; margin-right: 5px;"></iconify-icon> Download Video';
+        userVideo.pause(); userVideo.src = ""; videoLoader.value = "";
+        previewSection.style.display = 'none'; uploadSection.style.display = 'block';
+        procText.style.display = 'none'; downloadBtn.disabled = false;
+        downloadBtn.innerHTML = '<iconify-icon icon="mdi:download"></iconify-icon> Download Video';
+    }
+
+    function setSpeed(speed, btn) {
+        currentSpeed = speed;
+        document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        userVideo.playbackRate = currentSpeed;
     }
 
     async function downloadVideo() {
         if (!userVideo.src) return;
-
         incrementCount();
 
         downloadBtn.disabled = true;
@@ -445,123 +316,82 @@
         
         const canvas = document.getElementById('recordingCanvas');
         const ctx = canvas.getContext('2d');
-        
         const w = 1840 * SCALE_FACTOR;
         const h = 3600 * SCALE_FACTOR;
-        canvas.width = w;
-        canvas.height = h;
+        canvas.width = w; canvas.height = h;
 
-        const isShortMode = document.getElementById('limitDuration').checked;
-        const maxDurationSec = 15; 
-        
-        // Get the selected background color for Chroma Keying
-        const selectedBgColor = document.querySelector('input[name="bgColor"]:checked').value;
+        const isLimit = document.getElementById('limitDuration').checked;
+        const bgColor = document.querySelector('input[name="bgColor"]:checked').value;
 
-        let mimeType = 'video/webm;codecs=vp9'; 
-        let fileExt = 'webm';
-        if (MediaRecorder.isTypeSupported('video/mp4')) {
-            mimeType = 'video/mp4';
-            fileExt = 'mp4';
-        } else if (MediaRecorder.isTypeSupported('video/webm;codecs=h264')) {
-             mimeType = 'video/webm;codecs=h264';
+        // Codec Selection
+        let mime = 'video/webm;codecs=vp9'; 
+        let ext = 'webm';
+        if (MediaRecorder.isTypeSupported('video/mp4')) { mime = 'video/mp4'; ext = 'mp4'; }
+        else if (MediaRecorder.isTypeSupported('video/webm;codecs=h264')) { mime = 'video/webm;codecs=h264'; }
+
+        const stream = canvas.captureStream(30); 
+        // Note: Audio is skipped for speed > 1x to avoid sync issues, usually mockups are silent or music added later.
+        if (currentSpeed === 1) {
+            try {
+                const audioStream = userVideo.captureStream ? userVideo.captureStream() : userVideo.mozCaptureStream ? userVideo.mozCaptureStream() : null;
+                if (audioStream && audioStream.getAudioTracks().length > 0) stream.addTrack(audioStream.getAudioTracks()[0]);
+            } catch(e) {}
         }
 
-        const stream = canvas.captureStream(24); 
-
-        try {
-            const audioStream = userVideo.captureStream ? userVideo.captureStream() : userVideo.mozCaptureStream ? userVideo.mozCaptureStream() : null;
-            if (audioStream && audioStream.getAudioTracks().length > 0) {
-                stream.addTrack(audioStream.getAudioTracks()[0]);
-            }
-        } catch(e) { console.warn("Audio capture warning:", e); }
-
-        const mediaRecorder = new MediaRecorder(stream, { 
-            mimeType: mimeType, 
-            videoBitsPerSecond: 3000000 // Increased bitrate slightly for quality
-        });
+        const recorder = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 3500000 });
         const chunks = [];
+        recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
 
-        mediaRecorder.ondataavailable = (e) => {
-            if (e.data.size > 0) chunks.push(e.data);
-        };
-
-        mediaRecorder.onstop = () => {
-            const blob = new Blob(chunks, { type: mimeType });
+        recorder.onstop = () => {
+            const blob = new Blob(chunks, { type: mime });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.href = url;
-            a.download = `dmo-mockup-${Date.now()}.${fileExt}`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
+            a.href = url; a.download = `dmo-mockup-${Date.now()}.${ext}`;
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            
             downloadBtn.disabled = false;
-            downloadBtn.innerHTML = '<iconify-icon icon="mdi:download" style="font-size: 1.3rem; vertical-align: sub; margin-right: 5px;"></iconify-icon> Download Video';
+            downloadBtn.innerHTML = '<iconify-icon icon="mdi:download"></iconify-icon> Download Video';
             procText.style.display = "none";
             
+            // Reset state
             userVideo.loop = true;
+            userVideo.playbackRate = 1; 
+            currentSpeed = 1;
+            document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.speed-btn')[0].classList.add('active'); // Reset UI to 1x
             userVideo.play();
         };
 
+        // Prepare recording
         userVideo.pause();
         userVideo.currentTime = 0;
-        userVideo.loop = false; 
-        
-        mediaRecorder.start();
-        
-        try {
-            await userVideo.play();
-        } catch(err) {
-            console.error("Play failed:", err);
-            resetApp();
-            return;
+        userVideo.loop = false;
+        userVideo.playbackRate = currentSpeed; // Apply selected speed
+
+        recorder.start();
+        try { await userVideo.play(); } catch(e) { resetApp(); return; }
+
+        let checker;
+        function draw() {
+            if (recorder.state === "inactive") { clearInterval(checker); return; }
+            ctx.fillStyle = bgColor; ctx.fillRect(0, 0, w, h);
+            ctx.drawImage(userVideo, 198*SCALE_FACTOR, 198*SCALE_FACTOR, 1444*SCALE_FACTOR, 3204*SCALE_FACTOR);
+            if (frameImg.complete) ctx.drawImage(frameImg, 0, 0, w, h);
+            requestAnimationFrame(draw);
         }
+        draw();
 
-        let stopCheckInterval;
-
-        function drawFrame() {
-            if (mediaRecorder.state === "inactive") {
-                if(stopCheckInterval) clearInterval(stopCheckInterval);
-                return;
-            }
-
-            // --- CHROMA KEY FIX ---
-            // Fill the canvas with the selected solid color (Green/Blue)
-            ctx.fillStyle = selectedBgColor;
-            ctx.fillRect(0, 0, w, h);
-            
-            // Draw Video
-            ctx.drawImage(userVideo, 198 * SCALE_FACTOR, 198 * SCALE_FACTOR, 1444 * SCALE_FACTOR, 3204 * SCALE_FACTOR);
-            
-            // Draw Frame
-            if (frameImg.complete) {
-                ctx.drawImage(frameImg, 0, 0, w, h);
-            }
-            requestAnimationFrame(drawFrame);
-        }
-        drawFrame();
-
-        if(isShortMode) {
-            stopCheckInterval = setInterval(() => {
-                if(userVideo.currentTime >= maxDurationSec) {
-                    if(mediaRecorder.state !== "inactive") {
-                        userVideo.pause();
-                        mediaRecorder.stop();
-                    }
-                    clearInterval(stopCheckInterval);
+        // Manual Stop Logic
+        if(isLimit) {
+            checker = setInterval(() => {
+                if(userVideo.currentTime >= 15) { 
+                    if(recorder.state !== "inactive") { userVideo.pause(); recorder.stop(); }
+                    clearInterval(checker);
                 }
-            }, 100); 
+            }, 100);
         }
-
-        userVideo.onended = () => {
-            if(mediaRecorder.state !== "inactive") {
-                mediaRecorder.stop();
-                if(stopCheckInterval) clearInterval(stopCheckInterval);
-            }
-        };
+        userVideo.onended = () => { if(recorder.state !== "inactive") recorder.stop(); };
     }
 </script>
-
 </body>
 </html>
