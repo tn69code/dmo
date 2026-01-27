@@ -1,0 +1,16 @@
+[
+    {
+        "Name": "My Test",
+        "Key": "abd26785e9cef8d1",
+        "Valid": "1",
+        "InfoMessage": "Welcome",
+        "Expiration": "2026-01-29"
+    },
+    {
+        "Name": "Customer 2",
+        "Key": "abd26785e9cef8d1ooo",
+        "Valid": "30",
+        "InfoMessage": "VIP User",
+        "Expiration": "2024-12-31"
+    }
+]
