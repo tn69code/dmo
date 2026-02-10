@@ -1,23 +1,9 @@
 [
     {
         "Name": "My Test",
-        "Key": "abd26785e9cef8d1",
-        "Valid": "1",
+        "Key": "KWAR9ABD26785E9CEF8D1",
+        "Valid": "8",
         "InfoMessage": "Welcome",
         "Expiration": "2026-02-16"
-    },
-    {
-        "Name": "SKS",
-        "Key": "43a0fb1d3beb3f31",
-        "Valid": "2",
-        "InfoMessage": "Welcome",
-        "Expiration": "2026-02-08"
-    },
-    {
-        "Name": "PPH",
-        "Key": "f61b795f7a9556b2",
-        "Valid": "2",
-        "InfoMessage": "VIP User",
-        "Expiration": "2026-02-08"
     }
 ]
